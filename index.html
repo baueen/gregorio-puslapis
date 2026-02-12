@@ -97,6 +97,54 @@
       line-height: 1.35;
     }
 
+    h2 span.name {
+      position: relative;
+      cursor: pointer;
+      color: #ff4d6d;
+      text-shadow: 0 0 10px rgba(255,77,109,0.5);
+      transition: all 0.3s ease;
+    }
+
+    h2 span.name:hover {
+      transform: scale(1.05);
+      text-shadow: 0 0 20px rgba(255,77,109,0.8);
+    }
+
+    .name-sparkle {
+      position: absolute;
+      font-size: 20px;
+      pointer-events: none;
+      animation: nameSparkle 1s ease-out forwards;
+      z-index: 50;
+    }
+
+    @keyframes nameSparkle {
+      0% { opacity: 1; transform: scale(0) rotate(0deg); }
+      100% { opacity: 0; transform: scale(2) rotate(360deg) translateY(-30px); }
+    }
+
+    .secret-msg {
+      position: fixed;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.95);
+      padding: 15px 25px;
+      border-radius: 20px;
+      font-family: 'Playfair Display';
+      color: #ff4d6d;
+      font-size: 18px;
+      box-shadow: 0 10px 30px rgba(255,77,109,0.4);
+      animation: secretPop 0.5s ease;
+      z-index: 200;
+      display: none;
+    }
+
+    @keyframes secretPop {
+      0% { opacity: 0; transform: translateX(-50%) scale(0.5); }
+      100% { opacity: 1; transform: translateX(-50%) scale(1); }
+    }
+
     .buttons {
       position: relative;
       height: 78px;
@@ -191,6 +239,34 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+      display: none;
+      margin-top: 30px;
+      padding: 16px 40px;
+      background: #1DB954;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(29,185,84,0.4);
+      transition: all 0.3s ease;
+      animation: slideUp 1.2s ease 0.5s backwards;
+    }
+
+      transform: scale(1.05);
+      box-shadow: 0 12px 32px rgba(29,185,84,0.6);
+    }
+
+      transform: scale(0.98);
+    }
+
+      display: none;
+      border-radius: 12px;
+      margin-top: 25px;
+      animation: slideUp 1s ease;
+    }
+
     /* Floating hearts */
     .heart {
       position: fixed;
@@ -241,7 +317,7 @@
     <div class="emoji">
       <img src="https://media.tenor.com/Hy46hpiHuj0AAAAM/waiting.gif" alt="Waiting cat">
     </div>
-    <h2>Bernadeta,<br>ar sutinki draugauti su manimi ir tapti mano mergina?</h2>
+    <h2><span class="name" id="bernadeta">Bernadeta</span>,<br>ar sutinki draugauti su manimi ir tapti mano mergina?</h2>
 
     <div class="buttons">
       <button id="yes">Taip 💖</button>
@@ -253,15 +329,29 @@
 
   <!-- Win Screen Overlay -->
   <div id="winScreen">
-    <div class="win-emoji">💖 YAY! 💖</div>
-    <div class="win-message">
-      Šiek tiek negaliu patikėti, kad mes pradedame šią kelionę, tačiau beprotiškai džiaugiuosi. Patys geriausi dalykai gyvenime nutinka nelaukiant, nesitikint ir atsitiktinumų vedant. Ačiū tau, kad atsiradai mano gyvenime!
+    <div class="win-emoji">💖 Holaa! 💖</div>
+    <div class="win-message" id="winText">
+      Bernadeta, širdis daužosi iš neįtikėtinos laimės - nuo šios stebuklingos akimirkos pradedame mūsų meilės kelionę! ❤️ Beprotiškai džiaugiuosi, nes patys gražiausi gyvenimo stebuklai nutinka netikėtai, vedami likimo gijų ir širdies šnabždesių. Ačiū tau, kad atsiradai mano pasaulyje ir padarei jį gerensiu. Tu esi mano, viskas! 💖
     </div>
+    
+    <!-- Spotify Button -->
+    <button id="spotifyBtn">
+      🎵 PASPAUSK MANE 🎵
+    </button>
+    
+    <!-- Spotify Player (hidden initially) -->
+    <iframe id="spotifyPlayer"
+      src="https://open.spotify.com/embed/track/6SKwQghsR8AISlxhcwyA9R?utm_source=generator" 
+      width="90%" height="152" frameBorder="0" 
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+      loading="lazy">
+    </iframe>
   </div>
 
   <!-- Sounds -->
   <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-voice-laugh-343.mp3"></audio>
   <audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+  <audio id="nameSound" src="https://assets.mixkit.co/sfx/preview/mixkit-romantic-ambient-19.mp3"></audio>
 
   <script>
     const noBtn = document.getElementById("no");
@@ -281,19 +371,34 @@
         setTimeout(() => createSparkle(), i * 50);
       }
       
-      // Move button randomly within card
+      // Move button randomly within card - MAŽIAU TOLI
       const cardRect = card.getBoundingClientRect();
       const btnRect = noBtn.getBoundingClientRect();
-      const maxX = cardRect.width - btnRect.width - 10;
-      const maxY = cardRect.height - btnRect.height - 10;
+      const maxX = (cardRect.width * 0.6) - btnRect.width;
+      const maxY = (cardRect.height * 0.4) - btnRect.height;
       
-      noBtn.style.left = Math.random() * maxX + "px";
-      noBtn.style.top = Math.random() * maxY + "px";
+      noBtn.style.left = Math.random() * Math.max(0, maxX) + "px";
+      noBtn.style.top = Math.random() * Math.max(0, maxY) + "px";
     });
 
     // YES button = WIN!
     yesBtn.addEventListener("click", () => {
       yesSound.play();
+      
+      // Sukurk tikslų laiką ir datą
+      const now = new Date();
+      const timeStr = now.toLocaleString('lt-LT', { 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+      });
+      
+      // Įterpk laiką į win tekstą
+      const winText = document.getElementById('winText');
+      winText.innerHTML = `Bernadeta, širdis vis dar daužosi iš neįtikėtinos laimės – nuo šios stebuklingos akimirkos <strong style="color:#fff; text-decoration:underline;">${timeStr}</strong> pradedame mūsų meilės kelionę! ❤️<br><br>Beprotiškai džiaugiuosi, nes patys gražiausi gyvenimo stebuklai nutinka netikėtai, vedami likimo gijų ir širdies šnabždesių.<br><br>Ačiū tau, kad atsiradai mano pasaulyje ir padei jam žydėti amžinai. Tu esi mano viskas! 💖`;
       
       // Fade out card and buttons
       document.querySelector('.buttons').style.opacity = '0';
@@ -305,6 +410,11 @@
       // Show win screen
       setTimeout(() => {
         winScreen.style.display = 'flex';
+        
+        // Rodyti Spotify mygtuką po 1.5s
+        setTimeout(() => {
+          document.getElementById('spotifyBtn').style.display = 'block';
+        }, 1500);
       }, 800);
       
       // Massive heart explosion
@@ -389,6 +499,57 @@
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 600);
     });
+
+    // Spotify mygtukas → paleisti dainą
+    document.getElementById('spotifyBtn').addEventListener('click', () => {
+      document.getElementById('spotifyBtn').style.display = 'none';
+      document.getElementById('spotifyPlayer').style.display = 'block';
+    });
+
+    // Bernadetos vardas – slaptas stebuklas
+    const nameEl = document.getElementById('bernadeta');
+    const nameSound = document.getElementById('nameSound');
+    const secretMsg = document.createElement('div');
+    secretMsg.className = 'secret-msg';
+    secretMsg.innerHTML = 'Grėgoris visada šalia ❤️';
+    document.body.appendChild(secretMsg);
+
+    let nameInteractions = 0;
+    nameEl.addEventListener('mouseenter', () => {
+      nameInteractions++;
+      playNameMagic();
+    });
+    nameEl.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      nameInteractions++;
+      playNameMagic();
+    });
+
+    function playNameMagic() {
+      nameSound.currentTime = 0;
+      nameSound.volume = 0.3;
+      nameSound.play();
+      
+      // Šokantys širdelės aplink vardą
+      for(let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'name-sparkle';
+          sparkle.innerHTML = ['💖','💕','💗','🌹'][Math.floor(Math.random()*4)];
+          sparkle.style.left = (Math.random() * 120 - 10) + '%';
+          sparkle.style.top = (Math.random() * 80 - 10) + '%';
+          nameEl.appendChild(sparkle);
+          setTimeout(() => sparkle.remove(), 1000);
+        }, i * 60);
+      }
+      
+      // Jei spustelėjo 3x – slaptas pranešimas
+      if(nameInteractions >= 3) {
+        secretMsg.style.display = 'block';
+        setTimeout(() => secretMsg.style.display = 'none', 4000);
+        nameInteractions = 0;
+      }
+    }
   </script>
 
 </body>

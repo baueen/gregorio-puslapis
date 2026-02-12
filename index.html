@@ -11,6 +11,13 @@
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
+    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
+    import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
+  </script>
+
   <style>
     * {
       box-sizing: border-box;
@@ -204,11 +211,12 @@
       z-index: 100;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       text-align: center;
       color: white;
       animation: fadeIn 0.8s ease;
-      padding: 20px;
+      padding: 30px 20px;
+      overflow-y: auto;
     }
 
     @keyframes fadeIn {
@@ -218,6 +226,7 @@
 
     #winScreen .win-emoji {
       font-size: 100px;
+      margin-top: 50px;
       margin-bottom: 30px;
       animation: winHeartbeat 1.5s infinite;
     }
@@ -309,6 +318,22 @@
       100% { transform: scale(1.5) translateY(-50px) rotate(180deg); opacity: 0; }
     }
 
+    /* Chat Box Interactive Effects */
+    #msgInput:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255,77,109,0.2) !important;
+    }
+
+    #sendBtn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,77,109,0.5), 0 4px 12px rgba(0,0,0,0.15) !important;
+    }
+
+    #sendBtn:active {
+      transform: translateY(0px);
+      box-shadow: 0 4px 16px rgba(255,77,109,0.3) !important;
+    }
+
     /* Responsive */
     @media (max-width: 480px) {
       h2 { font-size: 23px; }
@@ -317,9 +342,15 @@
       button { padding: 12px 28px; font-size: 15px; }
       #yes { left: 8%; }
       #no { left: 55%; }
+      #winScreen { padding: 20px 15px; }
       #winScreen .win-message { font-size: 20px; max-width: 90%; }
-      #winScreen .win-emoji { font-size: 70px; }
+      #winScreen .win-emoji { font-size: 70px; margin-top: 30px; }
+      #chatBox { padding: 18px !important; }
+      #chatBox h3 { font-size: 19px !important; }
+      #sendBtn { padding: 12px 36px !important; font-size: 15px !important; }
+      #msgInput { font-size: 14px !important; }
     }
+    
   </style>
 </head>
 
@@ -358,6 +389,18 @@
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
       loading="lazy">
     </iframe>
+
+    <!-- Chat Box -->
+    <div id="chatBox" style="margin-top:25px; margin-bottom:20px; padding:25px; background:rgba(255,255,255,0.25); backdrop-filter:blur(10px); border-radius:24px; max-width:500px; width:90%; box-shadow:0 8px 32px rgba(255,77,109,0.3), inset 0 0 0 1px rgba(255,255,255,0.3);">
+      <h3 style="color:#fff; margin-bottom:20px; font-size:22px; text-align:center; font-weight:600; text-shadow:0 2px 8px rgba(0,0,0,0.1);">Čia visada gali sugrįžti ir palikti žinutę 💌</h3>
+      <div style="margin-bottom:18px;">
+        <input id="msgInput" placeholder="Aš galvoju..." style="width:100%; padding:14px 18px; border-radius:14px; border:none; font-size:15px; margin-bottom:14px; background:rgba(255,255,255,0.9); box-shadow:0 4px 16px rgba(0,0,0,0.1); transition:all 0.3s ease; outline:none;">
+        <div style="display:flex; justify-content:center;">
+          <button id="sendBtn" style="padding:14px 48px; background:linear-gradient(135deg, #ff4d6d, #ff758f); color:white; border:none; border-radius:14px; cursor:pointer; font-weight:600; font-size:16px; box-shadow:0 6px 20px rgba(255,77,109,0.4), 0 2px 8px rgba(0,0,0,0.1); transition:all 0.3s ease;">Siųsti</button>
+        </div>
+      </div>
+      <div id="messages" style="max-height:180px; overflow-y:auto; color:#fff; font-size:14px; text-shadow:0 1px 3px rgba(0,0,0,0.1);"></div>
+    </div>
   </div>
 
   <!-- Sounds -->
@@ -570,6 +613,47 @@
         nameInteractions = 0;
       }
     }
+    
+    // Firebase Configuration and Chat
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5MRm9r9e5m__zMMjyvJb6YamQL-PI8vg",
+      authDomain: "project-3905b.firebaseapp.com",
+      projectId: "project-3905b",
+      storageBucket: "project-3905b.firebasestorage.app",
+      messagingSenderId: "323270470996",
+      appId: "1:323270470996:web:86085c394a0cbd2e072cc1"
+    };
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+    
+    // Auto login
+    signInAnonymously(auth).catch(e => console.log('Auth error:', e));
+    
+    // Realtime messages
+    const q = query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(20));
+    onSnapshot(q, (snap) => {
+      const msgs = [];
+      snap.forEach(doc => {
+        const data = doc.data();
+        msgs.push(`<p>${data.text} <small>${data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString('lt') : ''}</small></p>`);
+      });
+      document.getElementById('messages').innerHTML = msgs.join('') || '<p>Nėra žinučių... Pradėk! 💕</p>';
+    });
+    
+    // Send
+    document.getElementById('sendBtn').onclick = async () => {
+      const text = document.getElementById('msgInput').value.trim();
+      if (text && auth.currentUser) {
+        await addDoc(collection(db, 'messages'), {
+          text,
+          timestamp: serverTimestamp(),
+          uid: auth.currentUser.uid.slice(0,8)
+        });
+        document.getElementById('msgInput').value = '';
+      }
+    };
+    
   </script>
 
 </body>

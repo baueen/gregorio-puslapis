@@ -148,7 +148,7 @@
       bottom: -20px;
       animation: floatUp linear forwards;
       pointer-events: none;
-      filter: drop-shadow(0 2px 8px rgba(255,77,109,0.6));
+      filter: blur(0.3px);
     }
 
     @keyframes floatUp {
@@ -157,20 +157,10 @@
         opacity: 1;
       }
       to {
-        transform: translateY(-120vh) rotate(360deg) scale(1.5);
+        transform: translateY(-120vh) scale(1.8);
         opacity: 0;
       }
     }
-
-    @keyframes sparkleUp {
-  to { transform: translateY(-100px) scale(0); opacity: 0; }
-    }
-
-    @keyframes tapHeart {
-  0% { transform: scale(0) rotate(-180deg); opacity: 1; }
-  100% { transform: scale(1.5) translateY(-50px) rotate(180deg); opacity: 0; }
-    }
-
 
     /* Responsive */
     @media (max-width: 480px) {
@@ -211,18 +201,8 @@
     const yesSound = document.getElementById("yesSound");
 
     noBtn.addEventListener("mouseenter", () => {
-  hoverSound.currentTime = 0;
-  hoverSound.play();
-  
-  // Sparkle trail
-  for(let i = 0; i < 8; i++) {
-    setTimeout(() => createSparkle(), i * 50);
-  }
-  
-  // Run away logic (keep existing)
-  const cardRect = card.getBoundingClientRect();
-  // ... rest stays the same
-    });
+      hoverSound.currentTime = 0;
+      hoverSound.play();
 
       const cardRect = card.getBoundingClientRect();
       const btnRect = noBtn.getBoundingClientRect();
@@ -232,32 +212,21 @@
 
       noBtn.style.left = Math.random() * maxX + "px";
       noBtn.style.top = Math.random() * maxY + "px";
-    
+    });
 
-   yesBtn.addEventListener("click", () => {
-  yesSound.play();
-  
-  // Hide buttons + show message
-  document.querySelector('.buttons').style.opacity = '0';
-  document.querySelector('.hint').innerHTML = '💕❤️💖';
-  
-  // Massive heart explosion
-  for(let i = 0; i < 30; i++) {
-    setTimeout(() => createHeart(), i * 100);
-  }
-  
-  confetti({
-    particleCount: 400,
-    spread: 120,
-    origin: { y: 0.6 }
-  });
-     });
+    yesBtn.addEventListener("click", () => {
+      yesSound.play();
 
+      confetti({
+        particleCount: 260,
+        spread: 120,
+        origin: { y: 0.65 }
+      });
 
       setTimeout(() => {
         alert("YAY 💕 Šiek tiek negaliu patikėti, kad mes pradedame šią kelionę, tačiau beprotiškai džiaugiuosi. Patys geriausi dalykai gyvenime nutinka nelaukiant, nesitikint ir atsitiktinumų vedant. Ačiū tau, kad atsiradai mano gyvenime!");
       }, 500);
-    
+    });
 
     function createHeart() {
       const heart = document.createElement("div");
@@ -273,35 +242,6 @@
     }
 
     setInterval(createHeart, 380);
-
-    function createSparkle() {
-  const sparkle = document.createElement("div");
-  sparkle.innerHTML = "✨";
-  sparkle.style.cssText = `
-    position: fixed;
-    left: ${Math.random() * 100}vw;
-    top: ${Math.random() * 50}vh;
-    font-size: ${Math.random() * 20 + 10}px;
-    animation: sparkleUp 1s ease-out forwards;
-    pointer-events: none;
-    z-index: 20;
-  `;
-  document.body.appendChild(sparkle);
-  setTimeout(() => sparkle.remove(), 1000);
-    }
-    document.body.addEventListener('click', (e) => {
-  if(e.target.closest('.buttons')) return;
-  const heart = document.createElement('div');
-  heart.innerHTML = '💖';
-  heart.style.cssText = `
-    position: fixed; left: ${e.clientX}px; top: ${e.clientY}px;
-    font-size: 30px; pointer-events: none; z-index: 30;
-    animation: tapHeart 0.6s ease-out forwards;
-  `;
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 600);
-});
-
   </script>
 
 </body>

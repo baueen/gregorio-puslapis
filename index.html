@@ -653,7 +653,14 @@
         document.getElementById('msgInput').value = '';
       }
     };
-    
+    // Testas
+    const sendBtn = document.getElementById('sendBtn');
+    const msgInput = document.getElementById('msgInput');
+    sendBtn.addEventListener('click', () => {
+    console.log('SEND PASPAUSTA!');
+    alert('Testas: mygtukas veikia');
+    });
+
   </script>
 
 </body>

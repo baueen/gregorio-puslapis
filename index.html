@@ -73,6 +73,13 @@
       margin-bottom: 12px;
       animation: heartbeat 1.8s infinite;
     }
+    .emoji img {
+      width: 160px;          /* adjust size as you like */
+      height: 145px;
+      border-radius: 20px;  /* optional: rounded corners */
+      object-fit: cover;
+    }
+
 
     @keyframes heartbeat {
       0%,100% { transform: scale(1); }
@@ -169,7 +176,9 @@
 <body>
 
   <div class="card">
-    <div class="emoji">❤️</div>
+  <div class="emoji">
+  <img src="https://media.tenor.com/Hy46hpiHuj0AAAAM/waiting.gif" alt="Waiting cat">
+  </div>
     <h2>Bernadeta,<br>ar sutinki būti mano mergina?</h2>
 
     <div class="buttons">

@@ -417,6 +417,8 @@
     const hoverSound = document.getElementById("hoverSound");
     const yesSound = document.getElementById("yesSound");
     const winScreen = document.getElementById("winScreen");
+    const sendBtn = document.getElementById('sendBtn');
+    const msgInput = document.getElementById('msgInput');
 
     // NO button runs away + sparkles
     noBtn.addEventListener("mouseenter", () => {
@@ -689,10 +691,6 @@ db.collection('messages')
   });
     messagesDiv.innerHTML = msgs.join('') || '<p></p>';
   });
-
-// Siuntimas
-const sendBtn = document.getElementById('sendBtn');
-const msgInput = document.getElementById('msgInput');
 
 sendBtn.addEventListener('click', async () => {
   const text = msgInput.value.trim();

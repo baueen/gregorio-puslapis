@@ -11,12 +11,10 @@
   <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js';
-    import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js';
-    import { getAuth, signInAnonymously } from 'https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js';
-  </script>
+  <!-- Firebase v10 compat-style per namespaces -->
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.1/firebase-auth-compat.js"></script>
 
   <style>
     * {
@@ -615,50 +613,56 @@
     }
     
     // Firebase Configuration and Chat
-    const firebaseConfig = {
-      apiKey: "AIzaSyA5MRm9r9e5m__zMMjyvJb6YamQL-PI8vg",
-      authDomain: "project-3905b.firebaseapp.com",
-      projectId: "project-3905b",
-      storageBucket: "project-3905b.firebasestorage.app",
-      messagingSenderId: "323270470996",
-      appId: "1:323270470996:web:86085c394a0cbd2e072cc1"
-    };
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-    const auth = getAuth(app);
-    
-    // Auto login
-    signInAnonymously(auth).catch(e => console.log('Auth error:', e));
-    
-    // Realtime messages
-    const q = query(collection(db, 'messages'), orderBy('timestamp', 'desc'), limit(20));
-    onSnapshot(q, (snap) => {
-      const msgs = [];
-      snap.forEach(doc => {
-        const data = doc.data();
-        msgs.push(`<p>${data.text} <small>${data.timestamp?.toDate ? data.timestamp.toDate().toLocaleString('lt') : ''}</small></p>`);
-      });
-      document.getElementById('messages').innerHTML = msgs.join('') || '<p>Nėra žinučių... Pradėk! 💕</p>';
+const firebaseConfig = {
+  apiKey: "AIzaSyA5MRm9r9e5m__zMMjyvJb6YamQL-PI8vg",
+  authDomain: "project-3905b.firebaseapp.com",
+  projectId: "project-3905b",
+  storageBucket: "project-3905b.firebasestorage.app",
+  messagingSenderId: "323270470996",
+  appId: "1:323270470996:web:86085c394a0cbd2e072cc1"
+};
+
+// Inicializuojam per compat API
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+
+// Auto login
+auth.signInAnonymously().catch(e => console.log('Auth error:', e));
+
+// Realtime messages
+const messagesDiv = document.getElementById('messages');
+db.collection('messages')
+  .orderBy('timestamp', 'desc')
+  .limit(20)
+  .onSnapshot((snap) => {
+    const msgs = [];
+    snap.forEach(doc => {
+      const data = doc.data();
+      const time =
+        data.timestamp && data.timestamp.toDate
+          ? data.timestamp.toDate().toLocaleString('lt-LT')
+          : '';
+      msgs.push(`<p>${data.text} <small>${time}</small></p>`);
     });
-    
-    // Send
-    document.getElementById('sendBtn').onclick = async () => {
-      const text = document.getElementById('msgInput').value.trim();
-      if (text && auth.currentUser) {
-        await addDoc(collection(db, 'messages'), {
-          text,
-          timestamp: serverTimestamp(),
-          uid: auth.currentUser.uid.slice(0,8)
-        });
-        document.getElementById('msgInput').value = '';
-      }
-    };
-    // Testas
-    const sendBtn = document.getElementById('sendBtn');
-    const msgInput = document.getElementById('msgInput');
-    sendBtn.addEventListener('click', () => {
-    console.log('SEND PASPAUSTA!');
-    alert('Testas: mygtukas veikia');
+    messagesDiv.innerHTML = msgs.join('') || '<p></p>';
+  });
+
+// Siuntimas
+const sendBtn = document.getElementById('sendBtn');
+const msgInput = document.getElementById('msgInput');
+
+sendBtn.addEventListener('click', async () => {
+  const text = msgInput.value.trim();
+  if (!text || !auth.currentUser) return;
+
+  await db.collection('messages').add({
+    text,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    uid: auth.currentUser.uid.slice(0, 8)
+  });
+
+  msgInput.value = '';
     });
 
   </script>

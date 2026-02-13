@@ -487,6 +487,13 @@
       position: relative;
       z-index: 10;
     }
+    
+    @media (max-width: 1024px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+        padding: 100px 20px 50px 20px;
+      }
+    }
 
     .side-panel {
       width: 100%;
@@ -752,7 +759,9 @@
 
     #yes {
       position: absolute;
-      left: 12%;
+      left: 5%;
+      top: 50%;
+      transform: translateY(-50%);
       background: linear-gradient(135deg, #ff4d6d, #ff758f);
       color: #fff;
       box-shadow: 0 14px 30px rgba(255,77,109,0.55);
@@ -765,8 +774,9 @@
 
     #no {
       position: absolute;
-      left: 62%;
+      left: 50%;
       top: 50%;
+      transform: translate(-50%, -50%);
       background: rgba(255,250,245,0.95);
       color: #4a1942;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
@@ -1196,6 +1206,15 @@
       }
       .holaa-heart {
         font-size: 100px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .side-panel:first-of-type {
+        display: none;
+      }
+      .side-panel:last-of-type {
+        display: none;
       }
     }
 
@@ -1644,7 +1663,7 @@
 
       <form class="login-form" id="loginForm">
         <div class="login-input-group">
-          <label class="login-input-label">Vartotojo vardas</label>
+          <label class="login-input-label">Gražiausios merginos pasaulyje vardas</label>
           <input 
             type="text" 
             id="usernameInput" 
@@ -1655,7 +1674,7 @@
         </div>
 
         <div class="login-input-group">
-          <label class="login-input-label">Slaptažodis</label>
+          <label class="login-input-label">Mano mėgstamiausias skaičius?</label>
           <input 
             type="password" 
             id="passwordInput" 
@@ -1694,7 +1713,7 @@
       <div class="main-header">
         <button class="nav-btn active" onclick="showSection('main', event)">💖 Holaa</button>
         <button class="nav-btn" onclick="showSection('contract', event)">📝 Susitariam</button>
-        <button class="nav-btn" onclick="showSection('memories', event)">📸 Prisiminimų</button>
+        <button class="nav-btn" onclick="showSection('memories', event)">📸 Prisiminimai</button>
         <button class="nav-btn" onclick="showSection('chat', event)">💌 Žinutės</button>
       </div>
 
@@ -1876,7 +1895,9 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
               <div class="song-item" onclick="openDateModal()" style="cursor:pointer;">
                 💖 Mūsų pirmasis pasimatymas
               </div>
-              <div class="song-item">🎂 Svarbios datos</div>
+              <div class="song-item" onclick="openImportantDatesModal()" style="cursor:pointer;">
+                🎂 Svarbios datos
+              </div>
               <div class="song-item">🎁 Dovanų sąrašas</div>
             </div>
           </div>
@@ -1892,7 +1913,7 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
 
       <div class="modal-overlay" id="dateModal">
         <div class="modal-content">
-          <button class="modal-close" onclick="closeDateModal()">✕</button>
+          <button class="modal-close" onclick="closeDateModal()" aria-label="Uždaryti">✕</button>
           
           <div class="heart-decoration">💖</div>
           <div class="heart-decoration">💗</div>
@@ -1901,27 +1922,74 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
           <div class="date-emoji">📅</div>
           
           <div class="date-title">Mūsų pirmasis pasimatymas</div>
-          <div class="date-subtitle">Dieną, kai viskas pasikeitė</div>
+          <div class="date-subtitle">Diena, kai viskas pasikeitė</div>
 
           <div class="date-display">
-            <div class="date-value">2026.01.21</div>
-            <div class="date-days" id="daysTogetherModal">0 days past...</div>
+            <div class="date-value" id="dateDisplayValue">2024.01.21</div>
+            <div class="date-days" id="daysTogetherModal" role="status">Skaičiuojama...</div>
           </div>
 
           <div class="date-message">
-            Šią dieną aš pirmą kartą pamačiau tave,<br>
-            ir nuo tada mano gyvenimas pasikeitė. 💞
+            Šią dieną aš pirmą kartą pamačiau tave - niekas nėra tas pats nuo tada! ❤️<br>
           </div>
         </div>
       </div>
 
+<div class="modal-overlay" id="importantDatesModal">
+  <div class="modal-content" style="max-width: 600px; max-height: 80vh; overflow-y: auto;">
+    <button class="modal-close" onclick="closeImportantDatesModal()" aria-label="Uždaryti">✕</button>
+    
+    <div class="heart-decoration">💖</div>
+    <div class="heart-decoration">💗</div>
+    <div class="heart-decoration">❤️</div>
+
+    <div class="date-emoji" style="font-size: 80px;">📅</div>
+    
+    <div class="date-title" style="margin-bottom: 10px;">Svarbios Datos</div>
+    <div class="date-subtitle">Mūsų specialios akimirkos</div>
+
+    <div style="margin: 30px 0; display: flex; gap: 12px; flex-wrap: wrap;">
+      <input 
+        type="date" 
+        id="newDateInput" 
+        style="flex: 1; min-width: 150px; padding: 12px 16px; border-radius: 15px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); color: #3a1032; font-size: 14px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; outline: none;"
+      >
+      <input 
+        type="text" 
+        id="newDateLabel" 
+        placeholder="Datos pavadinimas..." 
+        style="flex: 1; min-width: 150px; padding: 12px 16px; border-radius: 15px; border: 2px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.95); color: #3a1032; font-size: 14px; font-family: 'Poppins', sans-serif; transition: all 0.3s ease; outline: none;"
+      >
+      <button 
+        id="addDateBtn" 
+        onclick="addImportantDate()" 
+        style="padding: 12px 28px; background: linear-gradient(135deg, #ff6b9d, #ff758f); color: #fff; border: none; border-radius: 15px; cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 0.8px; box-shadow: 0 8px 20px rgba(255,77,109,0.5);"
+      >
+        + Pridėti
+      </button>
+    </div>
+
+    <div id="importantDatesList" role="list" style="display: flex; flex-direction: column; gap: 15px;">
+      <!-- Dates will be added here -->
+    </div>
+
+    <div id="noDatesHint" role="status" style="text-align: center; color: rgba(255,245,247,0.6); font-size: 15px; padding: 40px 20px; font-style: italic;">
+      Kraunamos datos... 💫
+    </div>
+  </div>
+</div>
+
     </div>
   </div>
 
-  <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-voice-laugh-343.mp3"></audio>
-  <audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
+  <audio id="hoverSound" preload="auto" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-voice-laugh-343.mp3"></audio>
+  <audio id="yesSound" preload="auto" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 
   <script>
+    // Firebase state management
+    let firebaseReady = false;
+    let firebaseError = null;
+
     // ========== LOGIN SYSTEM ==========
     const loginForm = document.getElementById('loginForm');
     const usernameInput = document.getElementById('usernameInput');
@@ -1971,7 +2039,7 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
           // Login failed
           loginLoading.classList.remove('show');
           loginError.classList.add('show');
-          loginError.textContent = '❌ Neteisingas vartotojo vardas arba slaptažodis';
+          loginError.textContent = '❌ Neteisingas vardas arba slaptažodis';
           
           // Shake animation
           loginForm.style.animation = 'none';
@@ -2011,7 +2079,14 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
     const isMobile = () => window.innerWidth <= 768;
 
     // NO button aggressively runs away - MOBILE FRIENDLY
+    let lastDodgeTime = 0;
+    const DODGE_DEBOUNCE = 100; // ms between dodges
+    
     const handleNoButtonDodge = (e) => {
+      const now = Date.now();
+      if (now - lastDodgeTime < DODGE_DEBOUNCE) return;
+      lastDodgeTime = now;
+      
       const rect = noBtn.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
@@ -2024,8 +2099,12 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       const detectionRange = isMobile() ? 80 : 150;
       
       if (distance < detectionRange) {
-        hoverSound.currentTime = 0;
-        hoverSound.play();
+        try {
+          hoverSound.currentTime = 0;
+          hoverSound.play().catch(() => {});
+        } catch (err) {
+          console.log('Sound play failed:', err);
+        }
         
         const angle = Math.atan2(centerY - clientY, centerX - clientX);
         
@@ -2040,8 +2119,8 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
         newX = Math.max(cardRect.left + 20, Math.min(newX, cardRect.right - 100));
         newY = Math.max(cardRect.top + 100, Math.min(newY, cardRect.bottom - 80));
         
-        const offsetX = newX - (cardRect.left + cardRect.width * 0.62);
-        const offsetY = newY - (cardRect.top + cardRect.height * 0.65);
+        const offsetX = newX - centerX;
+        const offsetY = newY - centerY;
         
         noBtn.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
         
@@ -2051,10 +2130,8 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       }
     };
 
-    noBtn.addEventListener("mousemove", handleNoButtonDodge);
-    noBtn.addEventListener("touchmove", (e) => {
-      handleNoButtonDodge(e);
-    }, { passive: true });
+    noBtn.addEventListener("mousemove", handleNoButtonDodge, { passive: true });
+    noBtn.addEventListener("touchmove", handleNoButtonDodge, { passive: true });
 
     document.addEventListener("mouseleave", () => {
       noBtn.style.transform = 'translate(0, 0)';
@@ -2218,19 +2295,35 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       appId: "1:323270470996:web:86085c394a0cbd2e072cc1"
     };
 
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const auth = firebase.auth();
+    let db, auth;
+    
+    try {
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.firestore();
+      auth = firebase.auth();
+      firebaseReady = true;
+      console.log('✅ Firebase sėkmingai inicijuotas');
+    } catch (error) {
+      firebaseError = error;
+      console.error('❌ Firebase inicijacijos klaida:', error);
+    }
 
-    auth.signInAnonymously().catch(e => console.log('Auth error:', e));
+    if (firebaseReady) {
+      auth.signInAnonymously().catch(e => console.log('⚠️ Auth error:', e));
+    }
 
     function updateDaysCounter() {
-      const startDate = new Date('2026-01-21');
+      const startDate = new Date('2024-01-21');
       const now = new Date();
       const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
       const daysText = document.getElementById('daysTogetherModal');
+      const dateDisplay = document.getElementById('dateDisplayValue');
+      
       if (daysText) {
-        daysText.textContent = `${diff} days past...`;
+        daysText.textContent = `${diff} dienų kartu ❤️`;
+      }
+      if (dateDisplay) {
+        dateDisplay.textContent = '2024.01.21';
       }
     }
     updateDaysCounter();
@@ -2398,6 +2491,264 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
         closeDateModal();
       }
     });
+
+  
+
+function openImportantDatesModal() {
+  const modal = document.getElementById('importantDatesModal');
+  modal.classList.add('active');
+  loadImportantDates();
+}
+
+function closeImportantDatesModal() {
+  const modal = document.getElementById('importantDatesModal');
+  modal.classList.remove('active');
+}
+
+document.getElementById('importantDatesModal').addEventListener('click', (e) => {
+  if (e.target.id === 'importantDatesModal') {
+    closeImportantDatesModal();
+  }
+});
+
+function formatDateDisplay(dateStr) {
+  try {
+    const date = new Date(dateStr + 'T00:00:00');
+    return date.toLocaleDateString('lt-LT', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  } catch (e) {
+    return dateStr;
+  }
+}
+
+function calculateDaysUntil(dateStr) {
+  try {
+    const targetDate = new Date(dateStr + 'T00:00:00');
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const diff = targetDate - today;
+    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    
+    return days;
+  } catch (e) {
+    return 0;
+  }
+}
+
+function getDaysStatus(days) {
+  if (days < 0) {
+    return `Prieš ${Math.abs(days)} dienų`;
+  } else if (days === 0) {
+    return '🎉 Šiandien!';
+  } else if (days === 1) {
+    return 'Rytoj! 🎊';
+  } else {
+    return `Už ${days} dienų`;
+  }
+}
+
+function getEmojiForLabel(label) {
+  const lowerLabel = label.toLowerCase();
+  if (lowerLabel.includes('orestas') || lowerLabel.includes('orestaso')) return '💙';
+  if (lowerLabel.includes('bernadeta') || lowerLabel.includes('bernardeto')) return '💖';
+  if (lowerLabel.includes('gimtadienis')) return '🎂';
+  if (lowerLabel.includes('metinės') || lowerLabel.includes('metine')) return '💑';
+  if (lowerLabel.includes('pirmasis') || lowerLabel.includes('pasimatymas')) return '💕';
+  return '📅';
+}
+
+function loadImportantDates() {
+  db.collection('importantDates')
+    .orderBy('date', 'asc')
+    .onSnapshot((snap) => {
+      const datesList = document.getElementById('importantDatesList');
+      const noDatesHint = document.getElementById('noDatesHint');
+      
+      const dates = [];
+      snap.forEach(doc => {
+        dates.push({
+          id: doc.id,
+          ...doc.data()
+        });
+      });
+
+      if (dates.length === 0) {
+        noDatesHint.style.display = 'block';
+        noDatesHint.textContent = 'Pridėkite svarbiausias mūsų datas... 💝';
+        datesList.innerHTML = '';
+      } else {
+        noDatesHint.style.display = 'none';
+        datesList.innerHTML = dates.map(date => {
+          const days = calculateDaysUntil(date.date);
+          const status = getDaysStatus(days);
+          const displayDate = formatDateDisplay(date.date);
+          const emoji = getEmojiForLabel(date.label);
+          
+          return `
+            <div role="listitem" style="background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08)); backdrop-filter: blur(20px); border: 2px solid rgba(255,255,255,0.3); border-radius: 22px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); position: relative; overflow: hidden; transition: all 0.3s ease;">
+              <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: radial-gradient(circle, rgba(255,107,157,0.3), transparent); border-radius: 50%; transform: translate(30%, -30%);"></div>
+              
+              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; position: relative; z-index: 1;">
+                <div style="display: flex; gap: 15px; flex: 1;">
+                  <div style="font-size: 40px; animation: heartbeat 2s infinite; flex-shrink: 0;">
+                    ${emoji}
+                  </div>
+                  <div style="flex: 1;">
+                    <div style="font-size: 18px; font-weight: 700; color: #fff5f7; margin-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                      ${date.label}
+                    </div>
+                    <div style="font-size: 14px; color: rgba(255,245,247,0.8); margin-bottom: 8px; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                      ${displayDate}
+                    </div>
+                    <div style="font-size: 13px; font-weight: 600; color: #ffd4a3; text-shadow: 0 1px 5px rgba(255,212,163,0.4);">
+                      ${status}
+                    </div>
+                  </div>
+                </div>
+                <button 
+                  onclick="deleteImportantDate('${date.id}')" 
+                  style="padding: 8px 14px; background: rgba(255,77,109,0.3); border: 2px solid rgba(255,77,109,0.5); border-radius: 12px; color: #ff6b9d; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.3s ease; opacity: 0.7; flex-shrink: 0; white-space: nowrap;"
+                  onmouseover="this.style.opacity='1'; this.style.background='rgba(255,77,109,0.5)';"
+                  onmouseout="this.style.opacity='0.7'; this.style.background='rgba(255,77,109,0.3)';"
+                  aria-label="Trinti datą: ${date.label}"
+                >
+                  ✕ Trinti
+                </button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+    }, error => {
+      console.error('Error loading dates:', error);
+      const noDatesHint = document.getElementById('noDatesHint');
+      if (noDatesHint) {
+        noDatesHint.textContent = 'Klaida kraunant datas. Pabandykite vėliau. ❌';
+        noDatesHint.style.display = 'block';
+      }
+    });
+}
+
+function addImportantDate() {
+      const dateInput = document.getElementById('newDateInput');
+      const labelInput = document.getElementById('newDateLabel');
+      const addBtn = document.getElementById('addDateBtn');
+      
+      const dateValue = (dateInput.value || '').trim();
+      const labelValue = (labelInput.value || '').trim();
+
+      if (!dateValue || !labelValue) {
+        alert('Prašome užpildyti abi laukelius! 💝');
+        return;
+      }
+      
+      // Validate date format
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dateValue)) {
+        alert('Neteisingas datos formatas. Naudokite: YYYY-MM-DD');
+        return;
+      }
+
+      addBtn.disabled = true;
+      addBtn.style.opacity = '0.6';
+      const originalText = addBtn.textContent;
+      addBtn.textContent = 'Pridedama... ✨';
+
+      db.collection('importantDates').add({
+        date: dateValue,
+        label: labelValue,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        dateInput.value = '';
+        labelInput.value = '';
+        addBtn.disabled = false;
+        addBtn.style.opacity = '1';
+        addBtn.textContent = originalText;
+        
+        // Success animation
+        addBtn.style.transform = 'scale(1.1)';
+        setTimeout(() => {
+          addBtn.style.transform = 'scale(1)';
+        }, 200);
+        
+        console.log('Data pridėta sėkmingai');
+      }).catch(error => {
+        console.error('Klaida pridedant datą:', error);
+        alert('Klaida! ' + error.message);
+        addBtn.disabled = false;
+        addBtn.style.opacity = '1';
+        addBtn.textContent = originalText;
+      });
+    }
+
+function deleteImportantDate(docId) {
+  if (confirm('Ar tikrai norite ištrinti šią datą? 💔')) {
+    db.collection('importantDates').doc(docId).delete()
+      .then(() => {
+        console.log('Data ištrinta');
+      })
+      .catch(error => {
+        console.error('Klaida trinant datą:', error);
+        alert('Klaida trinant datą!');
+      });
+  }
+}
+
+function initializeDefaultDates() {
+  if (!firebaseReady) {
+    console.warn('⚠️ Firebase negriebus, bandome vėliau...');
+    setTimeout(initializeDefaultDates, 1000);
+    return;
+  }
+  
+  db.collection('importantDates').get().then(snap => {
+    if (snap.empty) {
+      console.log('📋 Nėra datų - pridedamos numatytosios');
+      const defaultDates = [
+        {
+          date: '2003-06-14',
+          label: '💙 Orestas Gimtadienis'
+        },
+        {
+          date: '2004-05-17',
+          label: '💖 Bernadeta Gimtadienis'
+        }
+      ];
+
+      defaultDates.forEach((dateObj, index) => {
+        setTimeout(() => {
+          db.collection('importantDates').add({
+            date: dateObj.date,
+            label: dateObj.label,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+          }).then(() => {
+            console.log('✅ Numatytoji data pridėta:', dateObj.label);
+          }).catch(error => {
+            console.error('❌ Klaida pridedant numatytąją datą:', error);
+          });
+        }, index * 500);
+      });
+    } else {
+      console.log('📊 Datos jau egzistuoja:', snap.size);
+    }
+  }).catch(error => {
+    console.error('❌ Klaida tikrinant datas:', error);
+  });
+}
+
+// Initialize default dates on DOMContentLoaded
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (firebaseReady) {
+      initializeDefaultDates();
+    } else {
+      console.warn('⚠️ Firebase dar negriebus prad\u017eioje');
+    }
+  }, 1500);
+});
   </script>
 
 </body>

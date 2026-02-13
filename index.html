@@ -589,6 +589,7 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      margin-bottom: 12px;
     }
 
     .song-item:hover {
@@ -1209,7 +1210,8 @@
         padding: 100px 20px 50px 20px;
       }
       .side-panel {
-        display: none;
+        display: block;
+        margin-bottom: 30px;
       }
       .holaa-text {
         font-size: 80px;
@@ -1221,11 +1223,8 @@
     }
 
     @media (max-width: 1024px) {
-      .side-panel:first-of-type {
-        display: none;
-      }
-      .side-panel:last-of-type {
-        display: none;
+      .side-panel {
+        display: block !important;
       }
     }
 
@@ -1960,7 +1959,6 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
           <div class="date-emoji">📅</div>
           
           <div class="date-title">Mūsų pirmasis pasimatymas</div>
-          <div class="date-subtitle">Diena, kai viskas pasikeitė</div>
 
           <div class="date-display">
             <div class="date-value" id="dateDisplayValue">2026.01.21</div>
@@ -1968,7 +1966,7 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
           </div>
 
           <div class="date-message">
-            Šią dieną aš pirmą kartą pamačiau tave - niekas nėra tas pats nuo tada! ❤️<br>
+            Šią dieną aš pirmą kartą pamačiau tave! ❤️<br>
           </div>
         </div>
       </div>
@@ -2733,12 +2731,6 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       }
     });
 
-    function openImportantDatesModal() {
-      const modal = document.getElementById('importantDatesModal');
-      modal.classList.add('active');
-      loadImportantDates();
-    }
-
     function closeImportantDatesModal() {
       const modal = document.getElementById('importantDatesModal');
       modal.classList.remove('active');
@@ -2935,6 +2927,64 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
             alert('Klaida trinant datą!');
           });
       }
+    }
+
+    // ========== INITIALIZE DEFAULT BIRTHDAYS ==========
+    function initializeDefaultBirthdays() {
+      if (!firebaseReady) {
+        console.warn('⚠️ Firebase negriebus, bandome vėliau...');
+        setTimeout(initializeDefaultBirthdays, 1000);
+        return;
+      }
+      
+      db.collection('importantDates').get().then(snap => {
+        if (snap.empty) {
+          console.log('📋 Nėra datų - pridedamos numatytosios gimtadieniai');
+          const defaultDates = [
+            {
+              date: '2003-06-14',
+              label: '💙 Oresto Gimtadienis'
+            },
+            {
+              date: '2004-05-17',
+              label: '💖 Bernadetos Gimtadienis'
+            }
+          ];
+
+          defaultDates.forEach((dateObj, index) => {
+            setTimeout(() => {
+              db.collection('importantDates').add({
+                date: dateObj.date,
+                label: dateObj.label,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+              }).then(() => {
+                console.log('✅ Gimtadienis pridėtas:', dateObj.label);
+              }).catch(error => {
+                console.error('❌ Klaida pridedant gimtadienį:', error);
+              });
+            }, index * 500);
+          });
+        } else {
+          console.log('📊 Datos jau egzistuoja');
+        }
+      }).catch(error => {
+        console.error('❌ Klaida tikrinant datas:', error);
+      });
+    }
+
+    // Auto-initialize birthdays when opening important dates modal
+    function openImportantDatesModal() {
+      const modal = document.getElementById('importantDatesModal');
+      modal.classList.add('active');
+      
+      // Initialize birthdays if not present
+      if (firebaseReady) {
+        initializeDefaultBirthdays();
+      }
+      
+      setTimeout(() => {
+        loadImportantDates();
+      }, 500);
     }
   </script>
 

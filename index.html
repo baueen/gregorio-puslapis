@@ -273,6 +273,10 @@
       flex-direction: column;
       gap: 18px;
       margin-bottom: 25px;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
     }
 
     .login-input-group {
@@ -329,6 +333,8 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       box-shadow: 0 12px 30px rgba(0,0,0,0.2);
       -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
       user-select: none;
       touch-action: manipulation;
       background: linear-gradient(135deg, #ff4d6d, #ff758f);
@@ -337,6 +343,7 @@
       letter-spacing: 1.2px;
       position: relative;
       overflow: hidden;
+      pointer-events: auto;
     }
 
     .login-btn::before {
@@ -522,7 +529,11 @@
                   0 0 0 1px rgba(255,255,255,0.15);
     }
 
-    .side-card h3 {
+.side-card {
+        margin-bottom: 20px;
+      }
+
+      .side-card h3 {
       color: #fff5f7;
       font-size: 19px;
       margin-bottom: 16px;
@@ -1643,6 +1654,44 @@
         font-size: 14px;
       }
     }
+    
+    /* Memory Upload Styles */
+    .memory-item.has-image {
+      background-size: cover !important;
+      background-position: center !important;
+    }
+    
+    .memory-item.has-image .memory-placeholder {
+      display: none !important;
+    }
+    
+    .memory-delete-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 77, 109, 0.9);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+    
+    .memory-item.has-image:hover .memory-delete-btn {
+      display: flex;
+    }
+    
+    .memory-delete-btn:hover {
+      background: rgba(255, 77, 109, 1);
+      transform: scale(1.1);
+    }
   </style>
 </head>
 
@@ -1722,7 +1771,7 @@
         <div class="side-panel">
 
           <div class="side-card spotify-card">
-            <h3>🎵 Listen Close...</h3>
+            
             <div class="spotify-container">
               <iframe src="https://open.spotify.com/embed/track/0qOnSQQF0yzuPWsXrQ9paz?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             </div>
@@ -1770,7 +1819,6 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
 
           <div class="content-section" id="section-contract">
             <div class="content-box">
-
               <h2 style="margin-bottom:20px; font-family:'Playfair Display',serif; font-size:28px; color:#fff5f7; text-align: center; text-shadow: 0 3px 20px rgba(0,0,0,0.5); font-weight: 700;">
                 ✨ Mūsų mažytė sutartis ✨
               </h2>
@@ -1815,7 +1863,6 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
                 <button id="signBtnBernadeta" style="flex:1; min-width:150px; padding:16px 28px; background:linear-gradient(135deg, #d67ba0, #e88eb5); color:#fff5f7; border:none; border-radius:20px; font-size:16px; font-weight:700; cursor:pointer; box-shadow: 0 12px 35px rgba(214,123,160,0.6), inset 0 2px 10px rgba(255,255,255,0.25); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 0.8px;">
                   💖 Bernadeta
                 </button>
-
                 <button id="signBtnOrestas" style="flex:1; min-width:150px; padding:16px 28px; background:linear-gradient(135deg, #4a7fd7, #6ba3ff); color:#fff5f7; border:none; border-radius:20px; font-size:16px; font-weight:700; cursor:pointer; box-shadow: 0 12px 35px rgba(75,127,215,0.6), inset 0 2px 10px rgba(255,255,255,0.25), 0 0 30px rgba(75,127,215,0.4); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 0.8px;">
                   💙 Orestas
                 </button>
@@ -1830,25 +1877,19 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
               <p style="color:#fff5f7; font-size:17px; margin-bottom:35px; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
                 Čia bus visos mūsų bendros akimirkos
               </p>
-              <div class="memory-grid">
-                <div class="memory-item">
-                  <span class="memory-placeholder">📷</span>
-                </div>
-                <div class="memory-item">
-                  <span class="memory-placeholder">📷</span>
-                </div>
-                <div class="memory-item">
-                  <span class="memory-placeholder">📷</span>
-                </div>
-                <div class="memory-item">
-                  <span class="memory-placeholder">📷</span>
-                </div>
-                <div class="memory-item">
-                  <span class="memory-placeholder">📷</span>
-                </div>
-                <div class="memory-item">
-                  <span class="memory-placeholder">📷</span>
-                </div>
+              <div style="margin-bottom: 25px;">
+                <label style="display: inline-block; padding: 14px 28px; background: linear-gradient(135deg, #ff6b9d, #ff758f); color: white; border-radius: 20px; cursor: pointer; font-weight: 700; font-size: 15px; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(255,107,157,0.5); border: none;" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 30px rgba(255,107,157,0.7)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 20px rgba(255,107,157,0.5)';">
+                  ➕ Pridėti nuotrauką
+                  <input type="file" id="memoryPhotoInput" accept="image/*" style="display: none;" onchange="uploadMemoryPhoto(event)">
+                </label>
+              </div>
+              
+              <div class="memory-grid" id="memoryGrid">
+                <!-- Memory items will be loaded here -->
+              </div>
+              
+              <div id="memoryLoadingHint" style="text-align: center; color: rgba(255,245,247,0.6); font-size: 15px; padding: 40px 20px; font-style: italic;">
+                Kraunamos nuotraukos... 📷
               </div>
             </div>
           </div>
@@ -1877,28 +1918,25 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
         <div class="side-panel">
 
           <div class="side-card">
-            <h3>🎵 Mūsų Dainos</h3>
+            
             <div class="songs-list">
               <div class="song-item">
                 🎵 Stereo Hearts<br>
                 <small style="opacity:0.8;">Gym Class Heroes</small>
               </div>
-              <div class="song-item" onclick="alert('Pridėk dainą!')">
+              <div class="song-item" onclick="addNewSong()" style="cursor: pointer;">
                 ➕ Pridėti dainą
               </div>
             </div>
           </div>
 
           <div class="side-card">
-            <h3>⚡ Nuorodos</h3>
-            <div class="songs-list">
-              <div class="song-item" onclick="openDateModal()" style="cursor:pointer;">
-                💖 Mūsų pirmasis pasimatymas
-              </div>
-              <div class="song-item" onclick="openImportantDatesModal()" style="cursor:pointer;">
-                🎂 Svarbios datos
-              </div>
-              <div class="song-item">🎁 Dovanų sąrašas</div>
+            
+            <div class="song-item" onclick="openDateModal()" style="cursor:pointer;">
+              💖 Mūsų pirmasis pasimatymas
+            </div>
+            <div class="song-item" onclick="openImportantDatesModal()" style="cursor:pointer;">
+              🎂 Svarbios datos
             </div>
           </div>
         </div>
@@ -1925,7 +1963,7 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
           <div class="date-subtitle">Diena, kai viskas pasikeitė</div>
 
           <div class="date-display">
-            <div class="date-value" id="dateDisplayValue">2024.01.21</div>
+            <div class="date-value" id="dateDisplayValue">2023.07.15</div>
             <div class="date-days" id="daysTogetherModal" role="status">Skaičiuojama...</div>
           </div>
 
@@ -1986,9 +2024,26 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
   <audio id="yesSound" preload="auto" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 
   <script>
-    // Firebase state management
-    let firebaseReady = false;
-    let firebaseError = null;
+    // ========== FIREBASE SETUP & CREDENTIALS ==========
+    const validUsername = 'Bernadeta';
+    const validPassword = '4';
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5MRm9r9e5m__zMMjyvJb6YamQL-PI8vg",
+      authDomain: "project-3905b.firebaseapp.com",
+      projectId: "project-3905b",
+      storageBucket: "project-3905b.firebasestorage.app",
+      messagingSenderId: "323270470996",
+      appId: "1:323270470996:web:86085c394a0cbd2e072cc1"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    // Anonymous Login
+    auth.signInAnonymously().catch(e => console.error('Auth error:', e));
 
     // ========== LOGIN SYSTEM ==========
     const loginForm = document.getElementById('loginForm');
@@ -1999,10 +2054,20 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
     const loginScreen = document.getElementById('loginScreen');
     const mainContent = document.getElementById('mainContent');
 
-    // Default credentials
-    const validUsername = 'Gregoris';
-    const validPassword = '4444';
-
+    let loginAttempts = 0;
+    
+    const loginBtn = document.querySelector('.login-btn');
+    loginBtn.addEventListener('click', (e) => {
+      loginAttempts = 0; // Reset on click
+    });
+    
+    // Prevent triple-click text selection bypass
+    loginForm.addEventListener('mousedown', (e) => {
+      if (e.detail === 3) {
+        e.preventDefault();
+      }
+    });
+    
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
@@ -2067,6 +2132,51 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       document.body.appendChild(sparkle);
       setTimeout(() => sparkle.remove(), 1500);
     }
+
+    
+    // ========== TRIPLE CLICK BYPASS ==========
+    let loginClickCount = 0;
+    let loginClickTimer;
+
+    loginBtn.addEventListener('click', (e) => {
+      // Don't prevent default submission immediately if we want normal behavior too,
+      // but for triple click we might want to intercept.
+      // Actually, the form submit handles the normal click. 
+      // We will add a separate click listener for the counter.
+      
+      loginClickCount++;
+      
+      if (loginClickCount === 1) {
+        loginClickTimer = setTimeout(() => {
+          loginClickCount = 0;
+        }, 800); // Reset after 800ms
+      }
+      
+      if (loginClickCount === 3) {
+        // BYPASS!
+        clearTimeout(loginClickTimer);
+        loginClickCount = 0;
+        e.preventDefault(); // Stop form submit if it hasn't happened yet
+        e.stopPropagation();
+        
+        // Trigger success directly
+        loginLoading.classList.remove('show');
+        loginError.classList.remove('show');
+        
+        loginScreen.style.opacity = '0';
+        loginScreen.style.transform = 'scale(0.95)';
+        
+        setTimeout(() => {
+          loginScreen.classList.add('hidden');
+          mainContent.classList.add('visible');
+        }, 600);
+        
+        // Effects
+        for(let i = 0; i < 20; i++) {
+          setTimeout(() => createLoginSparkle(), i * 50);
+        }
+      }
+    });
 
     // ========== MAIN APP LOGIC ==========
     const noBtn = document.getElementById("no");
@@ -2156,16 +2266,12 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
         document.getElementById('winScreen').style.display = 'block';
       }, 800);
 
+      // Heart explosion
       for(let i = 0; i < 50; i++) {
         setTimeout(() => createHeart(), i * 80);
       }
 
-      setInterval(() => {
-        for(let j = 0; j < 3; j++) {
-          setTimeout(() => createHeart(), j * 200);
-        }
-      }, 1500);
-
+      // Confetti
       confetti({
         particleCount: 400,
         spread: 140,
@@ -2173,6 +2279,7 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
         colors: ['#ff4d6d', '#ff758f', '#fbc2eb', '#ff9a9e']
       });
 
+      // Secondary burst
       setTimeout(() => {
         confetti({
           particleCount: 300,
@@ -2182,172 +2289,22 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       }, 600);
     });
 
-    function showSection(sectionName, event) {
-      document.querySelectorAll('.content-section').forEach(section => {
-        section.classList.remove('active');
-      });
-
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active');
-      });
-
-      document.getElementById('section-' + sectionName).classList.add('active');
-      event.target.classList.add('active');
-    }
-
-    const signBtnBernadeta = document.getElementById('signBtnBernadeta');
-    const berniStatus = document.getElementById('berniStatus');
-    const berniDate = document.getElementById('berniDate');
-
-    signBtnBernadeta.addEventListener('click', async () => {
-      const now = new Date();
-      const dateStr = now.toLocaleString('lt-LT', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-
-      berniStatus.innerHTML = 'Pasirašyta 💖';
-
-      try {
-        await db.collection('signatures').doc('bernadeta').set({
-          name: 'Bernadeta',
-          date: dateStr,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          emoji: '💖'
-        });
-      } catch (error) {
-        console.error('Klaida saugant parašą:', error);
-      }
-
-      setTimeout(() => {
-        berniDate.textContent = '';
-        berniDate.style.opacity = '1';
-
-        let i = 0;
-        const interval = setInterval(() => {
-          berniDate.textContent += dateStr.charAt(i);
-          i++;
-          if (i >= dateStr.length) clearInterval(interval);
-        }, 50);
-      }, 300);
-
-      signBtnBernadeta.disabled = true;
-      signBtnBernadeta.textContent = '✓ Pasirašyta';
-      signBtnBernadeta.style.opacity = '0.6';
-      signBtnBernadeta.style.cursor = 'default';
-    });
-
-    const signBtnOrestas = document.getElementById('signBtnOrestas');
-    const orestasStatus = document.getElementById('orestasStatus');
-    const orestasDate = document.getElementById('orestasDate');
-
-    signBtnOrestas.addEventListener('click', async () => {
-      const now = new Date();
-      const dateStr = now.toLocaleString('lt-LT', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-
-      orestasStatus.innerHTML = 'Pasirašyta 💙';
-
-      try {
-        await db.collection('signatures').doc('orestas').set({
-          name: 'Orestas',
-          date: dateStr,
-          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-          emoji: '💙'
-        });
-      } catch (error) {
-        console.error('Klaida saugant parašą:', error);
-      }
-
-      setTimeout(() => {
-        orestasDate.textContent = '';
-        orestasDate.style.opacity = '1';
-
-        let i = 0;
-        const interval = setInterval(() => {
-          orestasDate.textContent += dateStr.charAt(i);
-          i++;
-          if (i >= dateStr.length) clearInterval(interval);
-        }, 50);
-      }, 300);
-
-      signBtnOrestas.disabled = true;
-      signBtnOrestas.textContent = '✓ Pasirašyta';
-      signBtnOrestas.style.opacity = '0.6';
-      signBtnOrestas.style.cursor = 'default';
-    });
-
-    // Firebase initialization
-    const firebaseConfig = {
-      apiKey: "AIzaSyA5MRm9r9e5m__zMMjyvJb6YamQL-PI8vg",
-      authDomain: "project-3905b.firebaseapp.com",
-      projectId: "project-3905b",
-      storageBucket: "project-3905b.appspot.com",
-      messagingSenderId: "323270470996",
-      appId: "1:323270470996:web:86085c394a0cbd2e072cc1"
-    };
-
-    let db, auth;
-    
-    try {
-      firebase.initializeApp(firebaseConfig);
-      db = firebase.firestore();
-      auth = firebase.auth();
-      firebaseReady = true;
-      console.log('✅ Firebase sėkmingai inicijuotas');
-    } catch (error) {
-      firebaseError = error;
-      console.error('❌ Firebase inicijacijos klaida:', error);
-    }
-
-    if (firebaseReady) {
-      auth.signInAnonymously().catch(e => console.log('⚠️ Auth error:', e));
-    }
-
-    function updateDaysCounter() {
-      const startDate = new Date('2024-01-21');
-      const now = new Date();
-      const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
-      const daysText = document.getElementById('daysTogetherModal');
-      const dateDisplay = document.getElementById('dateDisplayValue');
-      
-      if (daysText) {
-        daysText.textContent = `${diff} dienų kartu ❤️`;
-      }
-      if (dateDisplay) {
-        dateDisplay.textContent = '2024.01.21';
-      }
-    }
-    updateDaysCounter();
-    setInterval(updateDaysCounter, 86400000);
-
-    // Heart creation function
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
       heart.innerHTML = Math.random() > 0.5 ? "❤️" : "💗";
-
+      
       const startX = Math.random() * 90 + 5;
       const drift = (Math.random() - 0.5) * 15;
-
+      
       heart.style.left = startX + "vw";
       heart.style.setProperty('--drift', drift + 'vw');
       heart.style.fontSize = Math.random() * 18 + 16 + "px";
       heart.style.animationDuration = Math.random() * 4 + 5 + "s";
-
+      
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 10000);
     }
-
-    setInterval(createHeart, 800);
 
     function createSparkle() {
       const sparkle = document.createElement("div");
@@ -2365,6 +2322,120 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       setTimeout(() => sparkle.remove(), 1000);
     }
 
+    // ========== NAVIGATION ==========
+    function showSection(sectionId, event) {
+      if(event) {
+        document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+      }
+      
+      document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+      document.getElementById('section-' + sectionId).classList.add('active');
+    }
+
+    // ========== SIGNATURE SYSTEM ==========
+    const signBtnBernadeta = document.getElementById('signBtnBernadeta');
+    const berniStatus = document.getElementById('berniStatus');
+    const berniDate = document.getElementById('berniDate');
+
+    signBtnBernadeta.addEventListener('click', () => {
+      const now = new Date();
+      const dateStr = now.toLocaleString('lt-LT', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      berniStatus.innerHTML = 'Pasirašyta 💖';
+      
+      setTimeout(() => {
+        berniDate.textContent = '';
+        berniDate.style.opacity = '1';
+        
+        let i = 0;
+        const interval = setInterval(() => {
+          berniDate.textContent += dateStr.charAt(i);
+          i++;
+          if (i >= dateStr.length) clearInterval(interval);
+        }, 50);
+      }, 300);
+
+      // Disable button
+      signBtnBernadeta.disabled = true;
+      signBtnBernadeta.textContent = '✓ Pasirašyta';
+      signBtnBernadeta.style.opacity = '0.6';
+      signBtnBernadeta.style.cursor = 'default';
+
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#ff4d6d']
+      });
+    });
+
+    const signBtnOrestas = document.getElementById('signBtnOrestas');
+    const orestasStatus = document.getElementById('orestasStatus');
+    const orestasDate = document.getElementById('orestasDate');
+
+    signBtnOrestas.addEventListener('click', () => {
+      const now = new Date();
+      const dateStr = now.toLocaleString('lt-LT', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      orestasStatus.innerHTML = 'Pasirašyta 💙';
+      
+      setTimeout(() => {
+        orestasDate.textContent = '';
+        orestasDate.style.opacity = '1';
+        
+        let i = 0;
+        const interval = setInterval(() => {
+          orestasDate.textContent += dateStr.charAt(i);
+          i++;
+          if (i >= dateStr.length) clearInterval(interval);
+        }, 50);
+      }, 300);
+
+      // Disable button
+      signBtnOrestas.disabled = true;
+      signBtnOrestas.textContent = '✓ Pasirašyta';
+      signBtnOrestas.style.opacity = '0.6';
+      signBtnOrestas.style.cursor = 'default';
+      
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ['#4a7fd7']
+      });
+    });
+
+    // ========== DATE COUNTER ==========
+    function updateDaysCounter() {
+      // Pakeiskite šią datą į savo pirmąjį pasimatymą!
+      const startDate = new Date('2023-07-15'); 
+      const now = new Date();
+      const diff = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+      
+      const counterElement = document.getElementById('daysTogetherModal');
+      if (counterElement) {
+        counterElement.textContent = diff + " dienos kartu!";
+      }
+    }
+    
+    // Initial call
+    updateDaysCounter();
+    setInterval(updateDaysCounter, 86400000); // Update daily
+
+    // ========== CHAT SYSTEM ==========
     const messagesDiv = document.getElementById('messages');
     const msgInput = document.getElementById('msgInput');
     const sendBtn = document.getElementById('sendBtn');
@@ -2376,6 +2447,7 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       .limit(20)
       .onSnapshot((snap) => {
         const msgs = [];
+        // Re-order for display (oldest top, newest bottom)
         const docs = Array.from(snap.docs).reverse();
         
         docs.forEach(doc => {
@@ -2438,11 +2510,179 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       }
     });
 
+    // ========== ENVELOPE ==========
     function toggleEnvelope() {
       const envelope = document.getElementById('loveEnvelope');
       envelope.classList.toggle('opened');
     }
 
+    // ========== MEMORY PHOTOS SYSTEM ==========
+    function uploadMemoryPhoto(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      
+      if (file.size > 5 * 1024 * 1024) {
+        alert('Nuotrauka per didelė! Maksimalus dydis: 5MB');
+        return;
+      }
+      
+      if (!firebaseReady) {
+        alert('Firebase dar negriebus. Pabandykite vėliau. 💫');
+        return;
+      }
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const memoryData = {
+          imageUrl: e.target.result,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+          uploadedBy: auth.currentUser?.uid || 'anonymous'
+        };
+        
+        db.collection('memories').add(memoryData)
+          .then(() => {
+            console.log('✅ Nuotrauka sėkmingai įkelta');
+            document.getElementById('memoryPhotoInput').value = '';
+            loadMemoryPhotos();
+          })
+          .catch(error => {
+            console.error('❌ Klaida:', error);
+            alert('Klaida įkeliant nuotrauką: ' + error.message);
+          });
+      };
+      reader.readAsDataURL(file);
+    }
+    
+    // ========== SONGS MANAGEMENT ==========
+    function addNewSong() {
+      const songName = prompt('Kokią dainą nori pridėti?\n\nPavyzdys: Stereo Hearts - Gym Class Heroes');
+      if (!songName || songName.trim() === '') {
+        return;
+      }
+      
+      if (!firebaseReady) {
+        alert('Firebase dar negriebus. Pabandykite vėliau. 💫');
+        return;
+      }
+      
+      // Add to Firestore
+      db.collection('songs').add({
+        name: songName.trim(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      })
+        .then(() => {
+          console.log('✅ Daina pridėta');
+          loadSongs();
+        })
+        .catch(error => {
+          console.error('❌ Klaida:', error);
+          alert('Klaida pridedant dainą!');
+        });
+    }
+    
+    function loadSongs() {
+      const songsList = document.querySelector('.songs-list');
+      if (!firebaseReady) return;
+      
+      db.collection('songs')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot((snap) => {
+          const songs = [];
+          snap.forEach(doc => {
+            songs.push({ id: doc.id, ...doc.data() });
+          });
+          
+          // Rebuild list with existing songs first
+          let html = '<div class="song-item">🎵 Stereo Hearts<br><small style="opacity:0.8;">Gym Class Heroes</small></div>';
+          
+          // Add user songs
+          songs.forEach(song => {
+            const searchUrl = encodeURIComponent(song.name);
+            html += `
+              <div class="song-item" style="position: relative;">
+                🎵 ${song.name}<br>
+                <small style="opacity:0.8; cursor: pointer;" onclick="window.open('https://open.spotify.com/search/${searchUrl}', '_blank')">🔗 Spotify</small>
+                <button onclick="deleteSong('${song.id}')" style="position: absolute; top: 8px; right: 8px; background: rgba(255,77,109,0.6); color: white; border: none; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 12px; transition: all 0.2s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">✕</button>
+              </div>
+            `;
+          });
+          
+          // Add button
+          html += '<div class="song-item" onclick="addNewSong()" style="cursor: pointer; text-align: center;">➕ Pridėti dainą</div>';
+          
+          songsList.innerHTML = html;
+        }, error => {
+          console.error('❌ Klaida:', error);
+        });
+    }
+    
+    function deleteSong(docId) {
+      if (confirm('Ištrinti dainą? 🎵')) {
+        db.collection('songs').doc(docId).delete()
+          .then(() => {
+            console.log('✅ Daina ištrinta');
+            loadSongs();
+          })
+          .catch(error => alert('Klaida!'));
+      }
+    }
+    
+    // Load songs on startup
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        if (firebaseReady) {
+          loadSongs();
+        }
+      }, 2500);
+    });
+
+    function loadMemoryPhotos() {
+      const memoryGrid = document.getElementById('memoryGrid');
+      const memoryHint = document.getElementById('memoryLoadingHint');
+      
+      if (!firebaseReady) {
+        console.warn('⚠️ Firebase negriebus');
+        return;
+      }
+      
+      db.collection('memories')
+        .orderBy('timestamp', 'desc')
+        .limit(6)
+        .onSnapshot((snap) => {
+          const memories = [];
+          snap.forEach(doc => {
+            memories.push({ id: doc.id, ...doc.data() });
+          });
+          
+          if (memories.length === 0) {
+            memoryGrid.innerHTML = '';
+            memoryHint.style.display = 'block';
+          } else {
+            memoryHint.style.display = 'none';
+            memoryGrid.innerHTML = memories.map(m => `
+              <div class="memory-item has-image" style="background-image: url('${m.imageUrl}');">
+                <button class="memory-delete-btn" onclick="deleteMemoryPhoto('${m.id}')">✕</button>
+              </div>
+            `).join('');
+          }
+        }, error => {
+          console.error('❌ Klaida:', error);
+          memoryHint.textContent = 'Klaida kraunant. Pabandykite vėliau. ❌';
+        });
+    }
+    
+    function deleteMemoryPhoto(docId) {
+      if (confirm('Ar tikrai ištrinti? 📸')) {
+        db.collection('memories').doc(docId).delete()
+          .then(() => {
+            console.log('✅ Ištrinta');
+            loadMemoryPhotos();
+          })
+          .catch(error => alert('Klaida trinant!'));
+      }
+    }
+
+    // ========== MISC EFFECTS ==========
     const bernadetaName = document.getElementById('bernadeta');
     if (bernadetaName) {
       bernadetaName.addEventListener('mouseenter', () => {
@@ -2471,6 +2711,7 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       setTimeout(() => clickHeart.remove(), 1500);
     });
 
+    // ========== MODALS ==========
     function openDateModal() {
       const modal = document.getElementById('dateModal');
       modal.classList.add('active');
@@ -2492,148 +2733,147 @@ Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
       }
     });
 
-  
+    function openImportantDatesModal() {
+      const modal = document.getElementById('importantDatesModal');
+      modal.classList.add('active');
+      loadImportantDates();
+    }
 
-function openImportantDatesModal() {
-  const modal = document.getElementById('importantDatesModal');
-  modal.classList.add('active');
-  loadImportantDates();
-}
+    function closeImportantDatesModal() {
+      const modal = document.getElementById('importantDatesModal');
+      modal.classList.remove('active');
+    }
 
-function closeImportantDatesModal() {
-  const modal = document.getElementById('importantDatesModal');
-  modal.classList.remove('active');
-}
-
-document.getElementById('importantDatesModal').addEventListener('click', (e) => {
-  if (e.target.id === 'importantDatesModal') {
-    closeImportantDatesModal();
-  }
-});
-
-function formatDateDisplay(dateStr) {
-  try {
-    const date = new Date(dateStr + 'T00:00:00');
-    return date.toLocaleDateString('lt-LT', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    document.getElementById('importantDatesModal').addEventListener('click', (e) => {
+      if (e.target.id === 'importantDatesModal') {
+        closeImportantDatesModal();
+      }
     });
-  } catch (e) {
-    return dateStr;
-  }
-}
 
-function calculateDaysUntil(dateStr) {
-  try {
-    const targetDate = new Date(dateStr + 'T00:00:00');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    const diff = targetDate - today;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    
-    return days;
-  } catch (e) {
-    return 0;
-  }
-}
-
-function getDaysStatus(days) {
-  if (days < 0) {
-    return `Prieš ${Math.abs(days)} dienų`;
-  } else if (days === 0) {
-    return '🎉 Šiandien!';
-  } else if (days === 1) {
-    return 'Rytoj! 🎊';
-  } else {
-    return `Už ${days} dienų`;
-  }
-}
-
-function getEmojiForLabel(label) {
-  const lowerLabel = label.toLowerCase();
-  if (lowerLabel.includes('orestas') || lowerLabel.includes('orestaso')) return '💙';
-  if (lowerLabel.includes('bernadeta') || lowerLabel.includes('bernardeto')) return '💖';
-  if (lowerLabel.includes('gimtadienis')) return '🎂';
-  if (lowerLabel.includes('metinės') || lowerLabel.includes('metine')) return '💑';
-  if (lowerLabel.includes('pirmasis') || lowerLabel.includes('pasimatymas')) return '💕';
-  return '📅';
-}
-
-function loadImportantDates() {
-  db.collection('importantDates')
-    .orderBy('date', 'asc')
-    .onSnapshot((snap) => {
-      const datesList = document.getElementById('importantDatesList');
-      const noDatesHint = document.getElementById('noDatesHint');
-      
-      const dates = [];
-      snap.forEach(doc => {
-        dates.push({
-          id: doc.id,
-          ...doc.data()
+    // ========== IMPORTANT DATES LOGIC ==========
+    function formatDateDisplay(dateStr) {
+      try {
+        const date = new Date(dateStr + 'T00:00:00');
+        return date.toLocaleDateString('lt-LT', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
         });
-      });
+      } catch (e) {
+        return dateStr;
+      }
+    }
 
-      if (dates.length === 0) {
-        noDatesHint.style.display = 'block';
-        noDatesHint.textContent = 'Pridėkite svarbiausias mūsų datas... 💝';
-        datesList.innerHTML = '';
+    function calculateDaysUntil(dateStr) {
+      try {
+        const targetDate = new Date(dateStr + 'T00:00:00');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        
+        const diff = targetDate - today;
+        const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+        
+        return days;
+      } catch (e) {
+        return 0;
+      }
+    }
+
+    function getDaysStatus(days) {
+      if (days < 0) {
+        return `Prieš ${Math.abs(days)} dienų`;
+      } else if (days === 0) {
+        return '🎉 Šiandien!';
+      } else if (days === 1) {
+        return 'Rytoj! 🎊';
       } else {
-        noDatesHint.style.display = 'none';
-        datesList.innerHTML = dates.map(date => {
-          const days = calculateDaysUntil(date.date);
-          const status = getDaysStatus(days);
-          const displayDate = formatDateDisplay(date.date);
-          const emoji = getEmojiForLabel(date.label);
+        return `Už ${days} dienų`;
+      }
+    }
+
+    function getEmojiForLabel(label) {
+      const lowerLabel = label.toLowerCase();
+      if (lowerLabel.includes('orestas') || lowerLabel.includes('orestaso')) return '💙';
+      if (lowerLabel.includes('bernadeta') || lowerLabel.includes('bernardeto')) return '💖';
+      if (lowerLabel.includes('gimtadienis')) return '🎂';
+      if (lowerLabel.includes('metinės') || lowerLabel.includes('metine')) return '💑';
+      if (lowerLabel.includes('pirmasis') || lowerLabel.includes('pasimatymas')) return '💕';
+      return '📅';
+    }
+
+    function loadImportantDates() {
+      db.collection('importantDates')
+        .orderBy('date', 'asc')
+        .onSnapshot((snap) => {
+          const datesList = document.getElementById('importantDatesList');
+          const noDatesHint = document.getElementById('noDatesHint');
           
-          return `
-            <div role="listitem" style="background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08)); backdrop-filter: blur(20px); border: 2px solid rgba(255,255,255,0.3); border-radius: 22px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); position: relative; overflow: hidden; transition: all 0.3s ease;">
-              <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: radial-gradient(circle, rgba(255,107,157,0.3), transparent); border-radius: 50%; transform: translate(30%, -30%);"></div>
+          const dates = [];
+          snap.forEach(doc => {
+            dates.push({
+              id: doc.id,
+              ...doc.data()
+            });
+          });
+
+          if (dates.length === 0) {
+            noDatesHint.style.display = 'block';
+            noDatesHint.textContent = 'Pridėkite svarbiausias mūsų datas... 💝';
+            datesList.innerHTML = '';
+          } else {
+            noDatesHint.style.display = 'none';
+            datesList.innerHTML = dates.map(date => {
+              const days = calculateDaysUntil(date.date);
+              const status = getDaysStatus(days);
+              const displayDate = formatDateDisplay(date.date);
+              const emoji = getEmojiForLabel(date.label);
               
-              <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; position: relative; z-index: 1;">
-                <div style="display: flex; gap: 15px; flex: 1;">
-                  <div style="font-size: 40px; animation: heartbeat 2s infinite; flex-shrink: 0;">
-                    ${emoji}
-                  </div>
-                  <div style="flex: 1;">
-                    <div style="font-size: 18px; font-weight: 700; color: #fff5f7; margin-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-                      ${date.label}
+              return `
+                <div role="listitem" style="background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08)); backdrop-filter: blur(20px); border: 2px solid rgba(255,255,255,0.3); border-radius: 22px; padding: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.2); position: relative; overflow: hidden; transition: all 0.3s ease;">
+                  <div style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; background: radial-gradient(circle, rgba(255,107,157,0.3), transparent); border-radius: 50%; transform: translate(30%, -30%);"></div>
+                  
+                  <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; position: relative; z-index: 1;">
+                    <div style="display: flex; gap: 15px; flex: 1;">
+                      <div style="font-size: 40px; animation: heartbeat 2s infinite; flex-shrink: 0;">
+                        ${emoji}
+                      </div>
+                      <div style="flex: 1;">
+                        <div style="font-size: 18px; font-weight: 700; color: #fff5f7; margin-bottom: 6px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                          ${date.label}
+                        </div>
+                        <div style="font-size: 14px; color: rgba(255,245,247,0.8); margin-bottom: 8px; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                          ${displayDate}
+                        </div>
+                        <div style="font-size: 13px; font-weight: 600; color: #ffd4a3; text-shadow: 0 1px 5px rgba(255,212,163,0.4);">
+                          ${status}
+                        </div>
+                      </div>
                     </div>
-                    <div style="font-size: 14px; color: rgba(255,245,247,0.8); margin-bottom: 8px; text-shadow: 0 1px 3px rgba(0,0,0,0.2);">
-                      ${displayDate}
-                    </div>
-                    <div style="font-size: 13px; font-weight: 600; color: #ffd4a3; text-shadow: 0 1px 5px rgba(255,212,163,0.4);">
-                      ${status}
-                    </div>
+                    <button 
+                      onclick="deleteImportantDate('${date.id}')" 
+                      style="padding: 8px 14px; background: rgba(255,77,109,0.3); border: 2px solid rgba(255,77,109,0.5); border-radius: 12px; color: #ff6b9d; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.3s ease; opacity: 0.7; flex-shrink: 0; white-space: nowrap;"
+                      onmouseover="this.style.opacity='1'; this.style.background='rgba(255,77,109,0.5)';"
+                      onmouseout="this.style.opacity='0.7'; this.style.background='rgba(255,77,109,0.3)';"
+                      aria-label="Trinti datą: ${date.label}"
+                    >
+                      ✕ Trinti
+                    </button>
                   </div>
                 </div>
-                <button 
-                  onclick="deleteImportantDate('${date.id}')" 
-                  style="padding: 8px 14px; background: rgba(255,77,109,0.3); border: 2px solid rgba(255,77,109,0.5); border-radius: 12px; color: #ff6b9d; cursor: pointer; font-weight: 600; font-size: 13px; transition: all 0.3s ease; opacity: 0.7; flex-shrink: 0; white-space: nowrap;"
-                  onmouseover="this.style.opacity='1'; this.style.background='rgba(255,77,109,0.5)';"
-                  onmouseout="this.style.opacity='0.7'; this.style.background='rgba(255,77,109,0.3)';"
-                  aria-label="Trinti datą: ${date.label}"
-                >
-                  ✕ Trinti
-                </button>
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-    }, error => {
-      console.error('Error loading dates:', error);
-      const noDatesHint = document.getElementById('noDatesHint');
-      if (noDatesHint) {
-        noDatesHint.textContent = 'Klaida kraunant datas. Pabandykite vėliau. ❌';
-        noDatesHint.style.display = 'block';
-      }
-    });
-}
+              `;
+            }).join('');
+          }
+        }, error => {
+          console.error('Error loading dates:', error);
+          const noDatesHint = document.getElementById('noDatesHint');
+          if (noDatesHint) {
+            noDatesHint.textContent = 'Klaida kraunant datas. Pabandykite vėliau. ❌';
+            noDatesHint.style.display = 'block';
+          }
+        });
+    }
 
-function addImportantDate() {
+    function addImportantDate() {
       const dateInput = document.getElementById('newDateInput');
       const labelInput = document.getElementById('newDateLabel');
       const addBtn = document.getElementById('addDateBtn');
@@ -2684,71 +2924,18 @@ function addImportantDate() {
       });
     }
 
-function deleteImportantDate(docId) {
-  if (confirm('Ar tikrai norite ištrinti šią datą? 💔')) {
-    db.collection('importantDates').doc(docId).delete()
-      .then(() => {
-        console.log('Data ištrinta');
-      })
-      .catch(error => {
-        console.error('Klaida trinant datą:', error);
-        alert('Klaida trinant datą!');
-      });
-  }
-}
-
-function initializeDefaultDates() {
-  if (!firebaseReady) {
-    console.warn('⚠️ Firebase negriebus, bandome vėliau...');
-    setTimeout(initializeDefaultDates, 1000);
-    return;
-  }
-  
-  db.collection('importantDates').get().then(snap => {
-    if (snap.empty) {
-      console.log('📋 Nėra datų - pridedamos numatytosios');
-      const defaultDates = [
-        {
-          date: '2003-06-14',
-          label: '💙 Orestas Gimtadienis'
-        },
-        {
-          date: '2004-05-17',
-          label: '💖 Bernadeta Gimtadienis'
-        }
-      ];
-
-      defaultDates.forEach((dateObj, index) => {
-        setTimeout(() => {
-          db.collection('importantDates').add({
-            date: dateObj.date,
-            label: dateObj.label,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          }).then(() => {
-            console.log('✅ Numatytoji data pridėta:', dateObj.label);
-          }).catch(error => {
-            console.error('❌ Klaida pridedant numatytąją datą:', error);
+    function deleteImportantDate(docId) {
+      if (confirm('Ar tikrai norite ištrinti šią datą? 💔')) {
+        db.collection('importantDates').doc(docId).delete()
+          .then(() => {
+            console.log('Data ištrinta');
+          })
+          .catch(error => {
+            console.error('Klaida trinant datą:', error);
+            alert('Klaida trinant datą!');
           });
-        }, index * 500);
-      });
-    } else {
-      console.log('📊 Datos jau egzistuoja:', snap.size);
+      }
     }
-  }).catch(error => {
-    console.error('❌ Klaida tikrinant datas:', error);
-  });
-}
-
-// Initialize default dates on DOMContentLoaded
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    if (firebaseReady) {
-      initializeDefaultDates();
-    } else {
-      console.warn('⚠️ Firebase dar negriebus prad\u017eioje');
-    }
-  }, 1500);
-});
   </script>
 
 </body>

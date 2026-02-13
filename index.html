@@ -344,6 +344,10 @@
       position: relative;
       overflow: hidden;
       pointer-events: auto;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .login-btn::before {
@@ -1059,6 +1063,8 @@
       justify-content: center;
       align-items: center;
       padding: 20px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .modal-overlay.active {
@@ -1080,6 +1086,10 @@
       position: relative;
       text-align: center;
       animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: auto;
     }
 
     .modal-close {
@@ -1098,6 +1108,9 @@
       justify-content: center;
       color: #fff;
       transition: all 0.3s ease;
+      min-width: 50px;
+      min-height: 50px;
+      touch-action: manipulation;
       box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     }
 
@@ -1212,6 +1225,7 @@
       .side-panel {
         display: block;
         margin-bottom: 30px;
+        width: 100%;
       }
       .holaa-text {
         font-size: 80px;
@@ -1238,14 +1252,30 @@
       }
 
       .nav-btn {
-        padding: 11px 20px;
+        padding: 12px 14px;
         font-size: 12px;
         letter-spacing: 0.8px;
+        min-height: 44px;
+        flex: 1 1 calc(50% - 5px);
+        min-width: 100px;
       }
 
       .dashboard-container {
         padding: 100px 15px 50px 15px;
         gap: 20px;
+      }
+
+      .side-panel {
+        display: block !important;
+        width: 100%;
+        margin-bottom: 20px;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .side-card {
+        flex: 1 1 calc(50% - 10px);
+        min-width: 150px;
       }
 
       .card {
@@ -1348,6 +1378,18 @@
       .login-title {
         font-size: 30px;
       }
+
+      #newDateInput,
+      #newDateLabel {
+        font-size: 14px;
+        padding: 12px 16px;
+        min-height: 44px;
+      }
+
+      #addDateBtn {
+        min-height: 44px;
+        min-width: 44px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -1355,13 +1397,20 @@
         height: auto;
         padding: 10px;
         gap: 8px;
+        flex-direction: column;
       }
 
       .nav-btn {
-        padding: 9px 14px;
-        font-size: 10px;
+        padding: 12px 14px;
+        font-size: 11px;
         letter-spacing: 0.5px;
         border-radius: 20px;
+        min-height: 44px;
+        min-width: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
       }
 
       .card {
@@ -1396,12 +1445,16 @@
         left: 5%;
         padding: 12px 20px;
         font-size: 14px;
+        min-height: 44px;
+        min-width: 44px;
       }
 
       #no {
         left: 50%;
         padding: 12px 20px;
         font-size: 14px;
+        min-height: 44px;
+        min-width: 44px;
       }
 
       .buttons {
@@ -1446,9 +1499,26 @@
         font-size: 16px;
       }
 
+      .side-card {
+        width: 100%;
+        flex: 1 1 100% !important;
+      }
+
+      .side-panel {
+        display: flex !important;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+
       .song-item {
         font-size: 12px;
-        padding: 12px;
+        padding: 14px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
       }
 
       .modal-content {
@@ -1458,11 +1528,13 @@
       }
 
       .modal-close {
-        width: 40px;
-        height: 40px;
+        width: 44px;
+        height: 44px;
         font-size: 22px;
         top: 15px;
         right: 15px;
+        min-width: 44px;
+        min-height: 44px;
       }
 
       .date-emoji {
@@ -1516,11 +1588,13 @@
       #msgInput {
         font-size: 14px !important;
         padding: 12px 15px !important;
+        min-height: 44px;
       }
 
       #sendBtn {
         padding: 12px 40px !important;
         font-size: 14px !important;
+        min-height: 44px;
       }
 
       .letter-content {
@@ -1558,12 +1632,34 @@
 
       .login-input {
         padding: 14px 16px;
-        font-size: 15px;
+        font-size: 16px;
+        min-height: 48px;
       }
 
       .login-btn {
         padding: 14px 35px;
         font-size: 15px;
+        min-height: 48px;
+      }
+
+      #newDateInput,
+      #newDateLabel {
+        font-size: 14px;
+        padding: 12px 16px;
+        min-height: 44px;
+        width: 100%;
+        margin-bottom: 8px;
+      }
+
+      #addDateBtn {
+        width: 100%;
+        min-height: 44px;
+      }
+
+      .dates-list {
+        max-height: 50vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
     }
 

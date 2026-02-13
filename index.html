@@ -47,6 +47,362 @@
       100% { background-position: 0% 50%; }
     }
 
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+
+    @keyframes sparkleUp {
+      to { transform: translateY(-100px) scale(0); opacity: 0; }
+    }
+
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      25% { transform: scale(1.08); }
+      50% { transform: scale(1); }
+      75% { transform: scale(1.12); }
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) translateX(0) scale(1) rotate(0deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-110vh) translateX(var(--drift)) scale(1.4) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes clickHeartFloat {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-80px) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLogin {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes slideInError {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px) scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(5deg); }
+    }
+
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1) rotate(-5deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+
+    @keyframes blobMove1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(50px,50px) scale(1.2); }
+    }
+
+    @keyframes blobMove2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-50px,-30px) scale(1.15); }
+    }
+
+    @keyframes blobMove3 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-40px,40px) scale(1.25); }
+    }
+
+    /* LOGIN SCREEN STYLES */
+    #loginScreen {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #ffd4a3 0%, #f8a5c2 25%, #e88eb5 55%, #c89dd6 85%, #9b72b0 100%);
+      background-size: 200% 200%;
+      animation: bgMove 18s ease-in-out infinite;
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: hidden;
+      transition: all 0.6s ease;
+    }
+
+    #loginScreen.hidden {
+      display: none;
+      pointer-events: none;
+    }
+
+    .login-blur-blobs {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: -1;
+    }
+
+    .login-blob {
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      filter: blur(50px);
+      opacity: 0.6;
+      mix-blend-mode: screen;
+    }
+
+    .login-blob-1 {
+      background: #f8a5c2;
+      top: -70px;
+      left: -50px;
+      animation: blobMove1 22s ease-in-out infinite;
+    }
+
+    .login-blob-2 {
+      background: #c89dd6;
+      bottom: -90px;
+      right: -50px;
+      animation: blobMove2 26s ease-in-out infinite;
+    }
+
+    .login-blob-3 {
+      background: #ffd4a3;
+      top: 40%;
+      left: 55%;
+      animation: blobMove3 30s ease-in-out infinite;
+    }
+
+    .login-container {
+      width: min(95%, 420px);
+      padding: 50px 40px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+      backdrop-filter: blur(30px) saturate(150%);
+      border-radius: 35px;
+      text-align: center;
+      box-shadow: 0 30px 70px rgba(0,0,0,0.4), 
+                  0 0 0 1px rgba(255,255,255,0.5),
+                  inset 0 2px 15px rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      position: relative;
+      z-index: 10;
+      animation: slideInLogin 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .login-container::before {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 38px;
+      background: linear-gradient(120deg, #ff4d6d, #ff9a9e, #fbc2eb);
+      z-index: -1;
+      filter: blur(25px);
+      opacity: 0.8;
+    }
+
+    .login-emoji {
+      font-size: 80px;
+      margin-bottom: 20px;
+      animation: heartbeat 1.8s infinite;
+    }
+
+    .login-title {
+      font-family: "Playfair Display", serif;
+      font-size: 36px;
+      color: #3a1032;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .login-subtitle {
+      font-size: 15px;
+      color: #5a4555;
+      margin-bottom: 35px;
+      font-style: italic;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .login-input-group {
+      position: relative;
+    }
+
+    .login-input-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #3a1032;
+      margin-bottom: 8px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid rgba(74, 25, 66, 0.3);
+      border-radius: 20px;
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #3a1032;
+      font-family: "Poppins", sans-serif;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1), inset 0 1px 3px rgba(0,0,0,0.05);
+    }
+
+    .login-input:focus {
+      border-color: rgba(199, 67, 117, 0.6);
+      background: #ffffff;
+      box-shadow: 0 8px 25px rgba(199, 67, 117, 0.25), 
+                  inset 0 1px 3px rgba(0,0,0,0.05);
+      transform: translateY(-2px);
+    }
+
+    .login-input::placeholder {
+      color: #c89dd6;
+      opacity: 0.7;
+    }
+
+    .login-btn {
+      padding: 16px 40px;
+      border-radius: 25px;
+      border: none;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+      background: linear-gradient(135deg, #ff4d6d, #ff758f);
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+
+    .login-btn:hover::before {
+      left: 100%;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 18px 40px rgba(255,77,109,0.75), 0 0 18px rgba(255,255,255,0.5);
+    }
+
+    .login-btn:active {
+      transform: translateY(-1px) scale(0.98);
+    }
+
+    .login-error {
+      padding: 12px 16px;
+      background: rgba(255, 100, 100, 0.2);
+      border: 2px solid rgba(255, 100, 100, 0.4);
+      border-radius: 15px;
+      color: #c74375;
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 12px;
+      display: none;
+      animation: slideInError 0.4s ease;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    }
+
+    .login-error.show {
+      display: block;
+    }
+
+    .login-loading {
+      display: none;
+      font-size: 14px;
+      color: #3a1032;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .login-loading.show {
+      display: block;
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    /* Main content hidden until login */
+    .main-content {
+      display: none;
+    }
+
+    .main-content.visible {
+      display: block;
+    }
+
     .main-header {
       position: fixed;
       top: 0;
@@ -238,11 +594,6 @@
       animation: fadeIn 0.6s ease;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     .holaa-box {
       text-align: center;
       margin-bottom: 28px;
@@ -270,11 +621,6 @@
       z-index: 0;
       animation: heartPulse 2s ease-in-out infinite;
       pointer-events: none;
-    }
-
-    @keyframes heartPulse {
-      0%, 100% { transform: scale(1) rotate(-5deg); }
-      50% { transform: scale(1.1) rotate(5deg); }
     }
 
     .holaa-text {
@@ -358,13 +704,6 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
-    @keyframes heartbeat {
-      0%,100% { transform: scale(1); }
-      25% { transform: scale(1.08); }
-      50% { transform: scale(1); }
-      75% { transform: scale(1.12); }
-    }
-
     h2 {
       font-family: "Playfair Display", serif;
       font-size: 30px;
@@ -412,6 +751,7 @@
     }
 
     #yes {
+      position: absolute;
       left: 12%;
       background: linear-gradient(135deg, #ff4d6d, #ff758f);
       color: #fff;
@@ -424,6 +764,7 @@
     }
 
     #no {
+      position: absolute;
       left: 62%;
       top: 50%;
       background: rgba(255,250,245,0.95);
@@ -465,32 +806,6 @@
       z-index: 5;
     }
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) translateX(0) scale(1) rotate(0deg);
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-110vh) translateX(var(--drift)) scale(1.4) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    @keyframes sparkleUp {
-      to { transform: translateY(-100px) scale(0); opacity: 0; }
-    }
-
-    @keyframes clickHeartFloat {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-80px) scale(1.5);
-        opacity: 0;
-      }
-    }
-
     .win-blobs {
       position: absolute;
       inset: 0;
@@ -527,21 +842,6 @@
       top: 40%;
       left: 55%;
       animation: blobMove3 30s ease-in-out infinite;
-    }
-
-    @keyframes blobMove1 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(50px,50px) scale(1.2); }
-    }
-
-    @keyframes blobMove2 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(-50px,-30px) scale(1.15); }
-    }
-
-    @keyframes blobMove3 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50% { transform: translate(-40px,40px) scale(1.25); }
     }
 
     #messages::-webkit-scrollbar {
@@ -595,23 +895,23 @@
 
     #signBtnBernadeta:hover,
     #signBtnOrestas:hover {
-      transform: translateY(-4px) scale(1.03);
+      transform: translateY(-4px) scale(1.03) !important;
       box-shadow: 0 18px 50px rgba(255,77,109,0.7) !important;
     }
 
     #msgInput:focus {
-      transform: translateY(-2px);
+      transform: translateY(-2px) !important;
       box-shadow: 0 8px 30px rgba(255,77,109,0.3) !important;
       outline: none;
     }
 
     #sendBtn:hover {
-      transform: translateY(-3px) scale(1.02);
+      transform: translateY(-3px) scale(1.02) !important;
       box-shadow: 0 12px 35px rgba(232,142,181,0.6) !important;
     }
 
     #sendBtn:active {
-      transform: translateY(-1px) scale(0.98);
+      transform: translateY(-1px) scale(0.98) !important;
     }
 
     .envelope-container {
@@ -698,11 +998,6 @@
       animation: bounce 2s ease-in-out infinite;
     }
 
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-
     .close-letter-btn {
       margin-top: 20px;
       padding: 12px 30px;
@@ -763,17 +1058,6 @@
       position: relative;
       text-align: center;
       animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateY(-50px) scale(0.9);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
     }
 
     .modal-close {
@@ -897,12 +1181,7 @@
       animation-delay: 1s;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-15px) rotate(5deg); }
-    }
-
-    /* Desktop: 1200px+ */
+    /* Tablet: 768px - 1199px */
     @media (max-width: 1200px) {
       .dashboard-container {
         grid-template-columns: 1fr;
@@ -920,7 +1199,6 @@
       }
     }
 
-    /* Tablet: 768px - 1199px */
     @media (max-width: 768px) {
       .main-header {
         height: auto;
@@ -1032,9 +1310,17 @@
       .envelope.opened .letter-content {
         padding-top: 25px;
       }
+
+      .login-container {
+        width: min(95%, 380px);
+        padding: 40px 30px;
+      }
+
+      .login-title {
+        font-size: 30px;
+      }
     }
 
-    /* Small phones: 480px - 767px */
     @media (max-width: 480px) {
       .main-header {
         height: auto;
@@ -1221,9 +1507,37 @@
       .envelope-icon {
         font-size: 28px;
       }
+
+      .login-container {
+        width: min(95%, 360px);
+        padding: 35px 25px;
+      }
+
+      .login-title {
+        font-size: 28px;
+        margin-bottom: 8px;
+      }
+
+      .login-subtitle {
+        font-size: 13px;
+        margin-bottom: 25px;
+      }
+
+      .login-emoji {
+        font-size: 70px;
+      }
+
+      .login-input {
+        padding: 14px 16px;
+        font-size: 15px;
+      }
+
+      .login-btn {
+        padding: 14px 35px;
+        font-size: 15px;
+      }
     }
 
-    /* Extra small: 360px and below */
     @media (max-width: 360px) {
       .card {
         width: 98%;
@@ -1291,66 +1605,130 @@
       .date-title {
         font-size: 20px;
       }
+
+      .login-container {
+        width: 98%;
+        padding: 30px 20px;
+      }
+
+      .login-title {
+        font-size: 24px;
+      }
+
+      .login-emoji {
+        font-size: 60px;
+      }
+
+      .login-btn {
+        padding: 12px 30px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <div class="card">
-    <div class="emoji">
-      <img src="https://media.tenor.com/Hy46hpiHuj0AAAAM/waiting.gif" alt="Waiting cat">
-    </div>
-    <h2><span class="name" id="bernadeta">Bernadeta</span>,<br>ar sutinki pradėti mūsų kelionę ir tapti mano mergina?</h2>
-
-    <div class="buttons">
-      <button id="yes">Taip 💖</button>
-      <button id="no">Ne 🙈</button>
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen">
+    <div class="login-blur-blobs">
+      <span class="login-blob login-blob-1"></span>
+      <span class="login-blob login-blob-2"></span>
+      <span class="login-blob login-blob-3"></span>
     </div>
 
-    <div class="hint">„Jei net mygtukas „Ne" bėga nuo tavęs, vadinasi likimas labai aiškiai sako „taip"." - Grėgoris✨</div>
-  </div>
+    <div class="login-container">
+      <div class="login-emoji">💖</div>
+      <h1 class="login-title">Sveiki!</h1>
+      <p class="login-subtitle">Prašom prisijungti</p>
 
-  <div id="winScreen">
-
-    <div class="main-header">
-      <button class="nav-btn active" onclick="showSection('main', event)">💖 Holaa</button>
-      <button class="nav-btn" onclick="showSection('contract', event)">📝 Susitariam</button>
-      <button class="nav-btn" onclick="showSection('memories', event)">📸 Prisiminimų</button>
-      <button class="nav-btn" onclick="showSection('chat', event)">💌 Žinutės</button>
-    </div>
-
-    <div class="dashboard-container">
-
-      <div class="side-panel">
-
-        <div class="side-card spotify-card">
-          <h3>🎵 Listen Close...</h3>
-          <div class="spotify-container">
-            <iframe src="https://open.spotify.com/embed/track/0qOnSQQF0yzuPWsXrQ9paz?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-          </div>
+      <form class="login-form" id="loginForm">
+        <div class="login-input-group">
+          <label class="login-input-label">Vartotojo vardas</label>
+          <input 
+            type="text" 
+            id="usernameInput" 
+            class="login-input" 
+            placeholder="Įveskite vardą" 
+            autocomplete="off"
+          >
         </div>
 
+        <div class="login-input-group">
+          <label class="login-input-label">Slaptažodis</label>
+          <input 
+            type="password" 
+            id="passwordInput" 
+            class="login-input" 
+            placeholder="Įveskite slaptažodį"
+            autocomplete="off"
+          >
+        </div>
+
+        <button type="submit" class="login-btn">Prisijungti 🚀</button>
+      </form>
+
+      <div class="login-error" id="loginError"></div>
+      <div class="login-loading" id="loginLoading">Prašau palaukite... ✨</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT (hidden until login) -->
+  <div class="main-content" id="mainContent">
+    <div class="card">
+      <div class="emoji">
+        <img src="https://media.tenor.com/Hy46hpiHuj0AAAAM/waiting.gif" alt="Waiting cat">
+      </div>
+      <h2><span class="name" id="bernadeta">Bernadeta</span>,<br>ar sutinki pradėti mūsų kelionę ir tapti mano mergina?</h2>
+
+      <div class="buttons">
+        <button id="yes">Taip 💖</button>
+        <button id="no">Ne 🙈</button>
       </div>
 
-      <div class="center-content">
+      <div class="hint">„Jei net mygtukas „Ne" bėga nuo tavęs, vadinasi likimas labai aiškiai sako „taip"." - Grėgoris✨</div>
+    </div>
 
-        <div class="content-section active" id="section-main">
+    <div id="winScreen">
 
-          <div class="holaa-box">
-            <div class="holaa-heart">💖</div>
-            <div class="holaa-text">Holaa!</div>
+      <div class="main-header">
+        <button class="nav-btn active" onclick="showSection('main', event)">💖 Holaa</button>
+        <button class="nav-btn" onclick="showSection('contract', event)">📝 Susitariam</button>
+        <button class="nav-btn" onclick="showSection('memories', event)">📸 Prisiminimų</button>
+        <button class="nav-btn" onclick="showSection('chat', event)">💌 Žinutės</button>
+      </div>
+
+      <div class="dashboard-container">
+
+        <div class="side-panel">
+
+          <div class="side-card spotify-card">
+            <h3>🎵 Listen Close...</h3>
+            <div class="spotify-container">
+              <iframe src="https://open.spotify.com/embed/track/0qOnSQQF0yzuPWsXrQ9paz?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
           </div>
 
-          <div class="envelope-container">
-            <div class="envelope" id="loveEnvelope" onclick="toggleEnvelope()">
-              <div class="envelope-flap">
-                <span class="envelope-icon">💌</span>
-                <span style="margin-left: 10px;">Atidaryti laišką</span>
-              </div>
-              <div class="letter-content">
-                <div class="content-text">
-                  Bernadeta, mano širdis vis dar spurda kaip pašėlusi – negaliu patikėti, kad ši akimirka tikra. Atrodo, visas pasaulis sustojo, kad galėčiau išgirsti tavo kvėpavimą ir jausti, kaip laikaisi už mano rankos. Nuo šios sekundės prasideda mūsų kelionė, ir aš jaučiu, kad ji bus pilna stebuklų, nes tu esi šalia. ❤️<br><br>
+        </div>
+
+        <div class="center-content">
+
+          <div class="content-section active" id="section-main">
+
+            <div class="holaa-box">
+              <div class="holaa-heart">💖</div>
+              <div class="holaa-text">Holaa!</div>
+            </div>
+
+            <div class="envelope-container">
+              <div class="envelope" id="loveEnvelope" onclick="toggleEnvelope()">
+                <div class="envelope-flap">
+                  <span class="envelope-icon">💌</span>
+                  <span style="margin-left: 10px;">Atidaryti laišką</span>
+                </div>
+                <div class="letter-content">
+                  <div class="content-text">
+                    Bernadeta, mano širdis vis dar spurda kaip pašėlusi – negaliu patikėti, kad ši akimirka tikra. Atrodo, visas pasaulis sustojo, kad galėčiau išgirsti tavo kvėpavimą ir jausti, kaip laikaisi už mano rankos. Nuo šios sekundės prasideda mūsų kelionė, ir aš jaučiu, kad ji bus pilna stebuklų, nes tu esi šalia. ❤️<br><br>
 
 Žinai, niekada nemaniau, kad galima taip staiga pajusti, jog radau tai, ko visą laiką ieškojau. Tu įžengei į mano gyvenimą tyliai, bet kartu ir taip garsiai – tarsi būtum atidariusi duris, pro kurias įsisuko saulė, šiluma ir visi gražiausi garsai. Dabar kiekvienas rytas bus kitoks, nes galvosiu apie tavo šypseną, kiekvienas vakaras – šviesesnis, nes žinosiu, kad tu esi kažkur ten, galvodama apie mane taip pat kaip ir aš apie tave.<br><br>
 
@@ -1361,188 +1739,268 @@ Pažadu tau: saugosiu tavo širdį taip, lyg ji būtų pati brangiausia, kas man
 Ačiū, kad pasirinkai mane. Ačiū, kad leidi tave mylėti. Ačiū, kad esi.<br><br>
 
 Su tavimi jaučiuosi laimingiausias vyras pasaulyje… ir tai tik pradžia. 💞
+                  </div>
+                  <button class="close-letter-btn" onclick="event.stopPropagation(); toggleEnvelope()">
+                    ✕ Uždaryti
+                  </button>
                 </div>
-                <button class="close-letter-btn" onclick="event.stopPropagation(); toggleEnvelope()">
-                  ✕ Uždaryti
+              </div>
+            </div>
+
+          </div>
+
+          <div class="content-section" id="section-contract">
+            <div class="content-box">
+
+              <h2 style="margin-bottom:20px; font-family:'Playfair Display',serif; font-size:28px; color:#fff5f7; text-align: center; text-shadow: 0 3px 20px rgba(0,0,0,0.5); font-weight: 700;">
+                ✨ Mūsų mažytė sutartis ✨
+              </h2>
+
+              <p style="font-size:16px; line-height:2; margin-bottom:30px; color:#fff5f7; text-shadow: 0 2px 6px rgba(0,0,0,0.4); background: linear-gradient(135deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1)); padding: 25px; border-radius: 18px; border-left: 5px solid rgba(232,142,181,0.9); box-shadow: 0 6px 20px rgba(0,0,0,0.25);">
+                Nuo šiandien - Pažadame vienas kitam ne tik daugiau juoko, bet ir drąsos būti keistais kartu. Daugiau apkabinimų - net kai karšta, net kai pykstamės, net kai sakome „palik mane ramybėje". Pažadame meilę, kuri neužgesta pirmadienį 8 ryte, penktadienio eilėje maximoje ar sekmadienio pagirių metu.
+                Aš konkrečiai pažadu būti tavo asmeniniu komiku, kai diena - visiška griūtis, ir tavo ramuma, kai verkiančiam reikia tik tylaus peties. Pažadu kurti tavo didžiausio gerbėjo armiją iš vieno žmogaus - šlovinti tavo pergales, net tas mažytes, kurių niekas nemato. Pažadu klausytis tavo istorijų, net kai jau žinau pabaigą, ir vis dar juoktis iš tavo juokų, net kai jie nejuokingi.
+                Pažadu rūpintis tavimi - nuo arbatos prie lovos per peršalimą iki impulsyvių šokių vidury virtuvės be jokios priežasties. Pažadu mylėti tavo keistumus, ir niekada neprarasti to žvilgsnio, kuriame mes vienas kitą matome kaip stebuklus, nepaisant visų trūkumų.
+                Mes - komanda, dviese prieš vieną pasaulį, amžinai kompanionai, pasirinkę vienas kitą ne tik tada, kada lengva, bet ypač tada, kai sunku.
+              </p>
+
+              <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:25px;">
+
+                <div style="flex:1; min-width:160px; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)); padding: 18px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 25px rgba(136,112,181,0.5); border: 2px solid rgba(136,112,181,0.4);">
+                  <div style="font-size:15px; margin-bottom:10px; font-weight:700; color:#9b8fc9; text-align:center; text-shadow: 0 3px 15px rgba(136,112,181,0.7);">Grėgoris</div>
+                  <div style="padding:14px 12px; border-radius:14px; background: linear-gradient(135deg, rgba(155,143,201,0.2), rgba(155,143,201,0.1)); border:2px dashed rgba(155,143,201,0.6); font-size:14px; min-height:45px; text-align:center; color:#fff5f7; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
+                    Pasirašyta 💖
+                  </div>
+                </div>
+
+                <div style="flex:1; min-width:160px; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)); padding: 18px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); border: 2px solid rgba(255,255,255,0.2);">
+                  <div style="font-size:15px; margin-bottom:10px; font-weight:700; color:#fff5f7; text-align:center; text-shadow: 0 3px 12px rgba(0,0,0,0.5);">Orestas</div>
+                  <div id="orestasSignature" style="padding:14px 12px; border-radius:14px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08)); border:2px dashed rgba(255,255,255,0.5); font-size:14px; min-height:45px; text-align:center; color:#fff5f7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
+                    <span id="orestasStatus">Laukia parašo...</span>
+                    <span id="orestasDate" style="font-size:11px; opacity:0; transition:opacity 0.5s ease;"></span>
+                  </div>
+                </div>
+
+                <div style="flex:1; min-width:160px; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)); padding: 18px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); border: 2px solid rgba(255,255,255,0.2);">
+                  <div style="font-size:15px; margin-bottom:10px; font-weight:700; color:#fff5f7; text-align:center; text-shadow: 0 3px 12px rgba(0,0,0,0.5);">Bernadeta</div>
+                  <div id="berniSignature" style="padding:14px 12px; border-radius:14px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08)); border:2px dashed rgba(255,255,255,0.5); font-size:14px; min-height:45px; text-align:center; color:#fff5f7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
+                    <span id="berniStatus">Laukia parašo...</span>
+                    <span id="berniDate" style="font-size:11px; opacity:0; transition:opacity 0.5s ease;"></span>
+                  </div>
+                </div>
+
+              </div>
+
+              <div style="width:100%; height:3px; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); margin:30px 0; box-shadow: 0 0 15px rgba(255,255,255,0.2);"></div>
+
+              <div style="display:flex; gap:18px; width:100%; flex-wrap:wrap;">
+                <button id="signBtnBernadeta" style="flex:1; min-width:150px; padding:16px 28px; background:linear-gradient(135deg, #d67ba0, #e88eb5); color:#fff5f7; border:none; border-radius:20px; font-size:16px; font-weight:700; cursor:pointer; box-shadow: 0 12px 35px rgba(214,123,160,0.6), inset 0 2px 10px rgba(255,255,255,0.25); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 0.8px;">
+                  💖 Bernadeta
+                </button>
+
+                <button id="signBtnOrestas" style="flex:1; min-width:150px; padding:16px 28px; background:linear-gradient(135deg, #4a7fd7, #6ba3ff); color:#fff5f7; border:none; border-radius:20px; font-size:16px; font-weight:700; cursor:pointer; box-shadow: 0 12px 35px rgba(75,127,215,0.6), inset 0 2px 10px rgba(255,255,255,0.25), 0 0 30px rgba(75,127,215,0.4); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 0.8px;">
+                  💙 Orestas
                 </button>
               </div>
+
+            </div>
+          </div>
+
+          <div class="content-section" id="section-memories">
+            <div class="content-box" style="text-align: center;">
+              <h2 style="color:#fff5f7; font-size:30px; margin-bottom:25px; font-family:'Playfair Display',serif; text-shadow: 0 3px 20px rgba(0,0,0,0.5);">📸 Prisiminimų Siena</h2>
+              <p style="color:#fff5f7; font-size:17px; margin-bottom:35px; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
+                Čia bus visos mūsų bendros akimirkos
+              </p>
+              <div class="memory-grid">
+                <div class="memory-item">
+                  <span class="memory-placeholder">📷</span>
+                </div>
+                <div class="memory-item">
+                  <span class="memory-placeholder">📷</span>
+                </div>
+                <div class="memory-item">
+                  <span class="memory-placeholder">📷</span>
+                </div>
+                <div class="memory-item">
+                  <span class="memory-placeholder">📷</span>
+                </div>
+                <div class="memory-item">
+                  <span class="memory-placeholder">📷</span>
+                </div>
+                <div class="memory-item">
+                  <span class="memory-placeholder">📷</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-section" id="section-chat">
+            <div class="content-box">
+              <h3 style="color:#fff; margin-bottom:28px; font-size:26px; text-align:center; font-weight:700; text-shadow:0 3px 20px rgba(0,0,0,0.4); font-family: 'Playfair Display', serif;">
+                💌 Apie ką galvoji? 💌
+              </h3>
+              <div style="margin-bottom:22px;">
+                <input id="msgInput" placeholder="Thoughts...loading...typing..." style="width:100%; padding:18px 22px; border-radius:20px; border:none; font-size:16px; margin-bottom:18px; background:rgba(255,255,255,0.96); box-shadow:0 8px 30px rgba(0,0,0,0.2); transition:all 0.3s ease; outline:none; font-family: 'Poppins', sans-serif; -webkit-appearance: none; appearance: none;">
+                <div style="display:flex; justify-content:center;">
+                  <button id="sendBtn" style="padding:18px 60px; background:linear-gradient(135deg, #e88eb5, #f8a5c2); color:#fff5f7; border:none; border-radius:20px; cursor:pointer; font-weight:700; font-size:17px; box-shadow:0 10px 35px rgba(232,142,181,0.55), inset 0 2px 10px rgba(255,255,255,0.25); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 1.2px;">
+                    Siųsti ✨
+                  </button>
+                </div>
+              </div>
+              <div id="messages" style="max-height:220px; overflow-y:auto; color:#fff; font-size:15px; text-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>
+              <div id="sendStatus" style="margin-top:12px; font-size:13px; color:#ffe; opacity:0; transition:opacity .3s;"></div>
+              <div id="typingHint" style="margin-top:8px; font-size:12px; color:#ffe; opacity:0; transition:opacity .2s;"></div>
             </div>
           </div>
 
         </div>
 
-        <div class="content-section" id="section-contract">
-          <div class="content-box">
+        <div class="side-panel">
 
-            <h2 style="margin-bottom:20px; font-family:'Playfair Display',serif; font-size:28px; color:#fff5f7; text-align: center; text-shadow: 0 3px 20px rgba(0,0,0,0.5); font-weight: 700;">
-              ✨ Mūsų mažytė sutartis ✨
-            </h2>
-
-            <p style="font-size:16px; line-height:2; margin-bottom:30px; color:#fff5f7; text-shadow: 0 2px 6px rgba(0,0,0,0.4); background: linear-gradient(135deg, rgba(0,0,0,0.2), rgba(0,0,0,0.1)); padding: 25px; border-radius: 18px; border-left: 5px solid rgba(232,142,181,0.9); box-shadow: 0 6px 20px rgba(0,0,0,0.25);">
-              Nuo šiandien - Pažadame vienas kitam ne tik daugiau juoko, bet ir drąsos būti keistais kartu. Daugiau apkabinimų - net kai karšta, net kai pykstamės, net kai sakome „palik mane ramybėje". Pažadame meilę, kuri neužgesta pirmadienį 8 ryte, penktadienio eilėje maximoje ar sekmadienio pagirių metu.
-              Aš konkrečiai pažadu būti tavo asmeniniu komiku, kai diena - visiška griūtis, ir tavo ramuma, kai verkiančiam reikia tik tylaus peties. Pažadu kurti tavo didžiausio gerbėjo armiją iš vieno žmogaus - šlovinti tavo pergales, net tas mažytes, kurių niekas nemato. Pažadu klausytis tavo istorijų, net kai jau žinau pabaigą, ir vis dar juoktis iš tavo juokų, net kai jie nejuokingi.
-              Pažadu rūpintis tavimi - nuo arbatos prie lovos per peršalimą iki impulsyvių šokių vidury virtuvės be jokios priežasties. Pažadu mylėti tavo keistumus, ir niekada neprarasti to žvilgsnio, kuriame mes vienas kitą matome kaip stebuklus, nepaisant visų trūkumų.
-              Mes - komanda, dviese prieš vieną pasaulį, amžinai kompanionai, pasirinkę vienas kitą ne tik tada, kada lengva, bet ypač tada, kai sunku.
-            </p>
-
-            <div style="display:flex; gap:18px; flex-wrap:wrap; margin-bottom:25px;">
-
-              <div style="flex:1; min-width:160px; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)); padding: 18px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.35), 0 0 25px rgba(136,112,181,0.5); border: 2px solid rgba(136,112,181,0.4);">
-                <div style="font-size:15px; margin-bottom:10px; font-weight:700; color:#9b8fc9; text-align:center; text-shadow: 0 3px 15px rgba(136,112,181,0.7);">Grėgoris</div>
-                <div style="padding:14px 12px; border-radius:14px; background: linear-gradient(135deg, rgba(155,143,201,0.2), rgba(155,143,201,0.1)); border:2px dashed rgba(155,143,201,0.6); font-size:14px; min-height:45px; text-align:center; color:#fff5f7; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
-                  Pasirašyta 💖
-                </div>
+          <div class="side-card">
+            <h3>🎵 Mūsų Dainos</h3>
+            <div class="songs-list">
+              <div class="song-item">
+                🎵 Stereo Hearts<br>
+                <small style="opacity:0.8;">Gym Class Heroes</small>
               </div>
-
-              <div style="flex:1; min-width:160px; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)); padding: 18px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); border: 2px solid rgba(255,255,255,0.2);">
-                <div style="font-size:15px; margin-bottom:10px; font-weight:700; color:#fff5f7; text-align:center; text-shadow: 0 3px 12px rgba(0,0,0,0.5);">Orestas</div>
-                <div id="orestasSignature" style="padding:14px 12px; border-radius:14px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08)); border:2px dashed rgba(255,255,255,0.5); font-size:14px; min-height:45px; text-align:center; color:#fff5f7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
-                  <span id="orestasStatus">Laukia parašo...</span>
-                  <span id="orestasDate" style="font-size:11px; opacity:0; transition:opacity 0.5s ease;"></span>
-                </div>
-              </div>
-
-              <div style="flex:1; min-width:160px; background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.2)); padding: 18px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.35); border: 2px solid rgba(255,255,255,0.2);">
-                <div style="font-size:15px; margin-bottom:10px; font-weight:700; color:#fff5f7; text-align:center; text-shadow: 0 3px 12px rgba(0,0,0,0.5);">Bernadeta</div>
-                <div id="berniSignature" style="padding:14px 12px; border-radius:14px; background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08)); border:2px dashed rgba(255,255,255,0.5); font-size:14px; min-height:45px; text-align:center; color:#fff5f7; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);">
-                  <span id="berniStatus">Laukia parašo...</span>
-                  <span id="berniDate" style="font-size:11px; opacity:0; transition:opacity 0.5s ease;"></span>
-                </div>
-              </div>
-
-            </div>
-
-            <div style="width:100%; height:3px; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); margin:30px 0; box-shadow: 0 0 15px rgba(255,255,255,0.2);"></div>
-
-            <div style="display:flex; gap:18px; width:100%; flex-wrap:wrap;">
-              <button id="signBtnBernadeta" style="flex:1; min-width:150px; padding:16px 28px; background:linear-gradient(135deg, #d67ba0, #e88eb5); color:#fff5f7; border:none; border-radius:20px; font-size:16px; font-weight:700; cursor:pointer; box-shadow: 0 12px 35px rgba(214,123,160,0.6), inset 0 2px 10px rgba(255,255,255,0.25); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 0.8px;">
-                💖 Bernadeta
-              </button>
-
-              <button id="signBtnOrestas" style="flex:1; min-width:150px; padding:16px 28px; background:linear-gradient(135deg, #4a7fd7, #6ba3ff); color:#fff5f7; border:none; border-radius:20px; font-size:16px; font-weight:700; cursor:pointer; box-shadow: 0 12px 35px rgba(75,127,215,0.6), inset 0 2px 10px rgba(255,255,255,0.25), 0 0 30px rgba(75,127,215,0.4); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 0.8px;">
-                💙 Orestas
-              </button>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="content-section" id="section-memories">
-          <div class="content-box" style="text-align: center;">
-            <h2 style="color:#fff5f7; font-size:30px; margin-bottom:25px; font-family:'Playfair Display',serif; text-shadow: 0 3px 20px rgba(0,0,0,0.5);">📸 Prisiminimų Siena</h2>
-            <p style="color:#fff5f7; font-size:17px; margin-bottom:35px; text-shadow: 0 2px 10px rgba(0,0,0,0.3);">
-              Čia bus visos mūsų bendros akimirkos
-            </p>
-            <div class="memory-grid">
-              <div class="memory-item">
-                <span class="memory-placeholder">📷</span>
-              </div>
-              <div class="memory-item">
-                <span class="memory-placeholder">📷</span>
-              </div>
-              <div class="memory-item">
-                <span class="memory-placeholder">📷</span>
-              </div>
-              <div class="memory-item">
-                <span class="memory-placeholder">📷</span>
-              </div>
-              <div class="memory-item">
-                <span class="memory-placeholder">📷</span>
-              </div>
-              <div class="memory-item">
-                <span class="memory-placeholder">📷</span>
+              <div class="song-item" onclick="alert('Pridėk dainą!')">
+                ➕ Pridėti dainą
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="content-section" id="section-chat">
-          <div class="content-box">
-            <h3 style="color:#fff; margin-bottom:28px; font-size:26px; text-align:center; font-weight:700; text-shadow:0 3px 20px rgba(0,0,0,0.4); font-family: 'Playfair Display', serif;">
-              💌 Apie ką galvoji? 💌
-            </h3>
-            <div style="margin-bottom:22px;">
-              <input id="msgInput" placeholder="Thoughts...loading...typing..." style="width:100%; padding:18px 22px; border-radius:20px; border:none; font-size:16px; margin-bottom:18px; background:rgba(255,255,255,0.96); box-shadow:0 8px 30px rgba(0,0,0,0.2); transition:all 0.3s ease; outline:none; font-family: 'Poppins', sans-serif; -webkit-appearance: none; appearance: none;">
-              <div style="display:flex; justify-content:center;">
-                <button id="sendBtn" style="padding:18px 60px; background:linear-gradient(135deg, #e88eb5, #f8a5c2); color:#fff5f7; border:none; border-radius:20px; cursor:pointer; font-weight:700; font-size:17px; box-shadow:0 10px 35px rgba(232,142,181,0.55), inset 0 2px 10px rgba(255,255,255,0.25); transition:all 0.3s ease; position:relative; text-transform: uppercase; letter-spacing: 1.2px;">
-                  Siųsti ✨
-                </button>
+          <div class="side-card">
+            <h3>⚡ Nuorodos</h3>
+            <div class="songs-list">
+              <div class="song-item" onclick="openDateModal()" style="cursor:pointer;">
+                💖 Mūsų pirmasis pasimatymas
               </div>
+              <div class="song-item">🎂 Svarbios datos</div>
+              <div class="song-item">🎁 Dovanų sąrašas</div>
             </div>
-            <div id="messages" style="max-height:220px; overflow-y:auto; color:#fff; font-size:15px; text-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>
-            <div id="sendStatus" style="margin-top:12px; font-size:13px; color:#ffe; opacity:0; transition:opacity .3s;"></div>
-            <div id="typingHint" style="margin-top:8px; font-size:12px; color:#ffe; opacity:0; transition:opacity .2s;"></div>
           </div>
         </div>
 
       </div>
 
-      <div class="side-panel">
+      <div class="win-blobs">
+        <span class="blob blob-1"></span>
+        <span class="blob blob-2"></span>
+        <span class="blob blob-3"></span>
+      </div>
 
-        <div class="side-card">
-          <h3>🎵 Mūsų Dainos</h3>
-          <div class="songs-list">
-            <div class="song-item">
-              🎵 Stereo Hearts<br>
-              <small style="opacity:0.8;">Gym Class Heroes</small>
-            </div>
-            <div class="song-item" onclick="alert('Pridėk dainą!')">
-              ➕ Pridėti dainą
-            </div>
+      <div class="modal-overlay" id="dateModal">
+        <div class="modal-content">
+          <button class="modal-close" onclick="closeDateModal()">✕</button>
+          
+          <div class="heart-decoration">💖</div>
+          <div class="heart-decoration">💗</div>
+          <div class="heart-decoration">❤️</div>
+
+          <div class="date-emoji">📅</div>
+          
+          <div class="date-title">Mūsų pirmasis pasimatymas</div>
+          <div class="date-subtitle">Dieną, kai viskas pasikeitė</div>
+
+          <div class="date-display">
+            <div class="date-value">2026.01.21</div>
+            <div class="date-days" id="daysTogetherModal">0 days past...</div>
           </div>
-        </div>
 
-        <div class="side-card">
-          <h3>⚡ Nuorodos</h3>
-          <div class="songs-list">
-            <div class="song-item" onclick="openDateModal()" style="cursor:pointer;">
-              💖 Mūsų pirmasis pasimatymas
-            </div>
-            <div class="song-item">🎂 Svarbios datos</div>
-            <div class="song-item">🎁 Dovanų sąrašas</div>
+          <div class="date-message">
+            Šią dieną aš pirmą kartą pamačiau tave,<br>
+            ir nuo tada mano gyvenimas pasikeitė. 💞
           </div>
         </div>
       </div>
 
     </div>
-
-    <div class="win-blobs">
-      <span class="blob blob-1"></span>
-      <span class="blob blob-2"></span>
-      <span class="blob blob-3"></span>
-    </div>
-
-    <div class="modal-overlay" id="dateModal">
-      <div class="modal-content">
-        <button class="modal-close" onclick="closeDateModal()">✕</button>
-        
-        <div class="heart-decoration">💖</div>
-        <div class="heart-decoration">💗</div>
-        <div class="heart-decoration">❤️</div>
-
-        <div class="date-emoji">📅</div>
-        
-        <div class="date-title">Mūsų pirmasis pasimatymas</div>
-        <div class="date-subtitle">Dieną, kai viskas pasikeitė</div>
-
-        <div class="date-display">
-          <div class="date-value">2026.01.21</div>
-          <div class="date-days" id="daysTogetherModal">0 days past...</div>
-        </div>
-
-        <div class="date-message">
-          Šią dieną aš pirmą kartą pamačiau tave,<br>
-          ir nuo tada mano gyvenimas pasikeitė. 💞
-        </div>
-      </div>
-    </div>
-
   </div>
 
   <audio id="hoverSound" src="https://assets.mixkit.co/sfx/preview/mixkit-cartoon-voice-laugh-343.mp3"></audio>
   <audio id="yesSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3"></audio>
 
   <script>
+    // ========== LOGIN SYSTEM ==========
+    const loginForm = document.getElementById('loginForm');
+    const usernameInput = document.getElementById('usernameInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const loginError = document.getElementById('loginError');
+    const loginLoading = document.getElementById('loginLoading');
+    const loginScreen = document.getElementById('loginScreen');
+    const mainContent = document.getElementById('mainContent');
+
+    // Default credentials
+    const validUsername = 'Gregoris';
+    const validPassword = '4444';
+
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      // Clear previous error
+      loginError.classList.remove('show');
+      loginError.textContent = '';
+
+      // Show loading
+      loginLoading.classList.add('show');
+
+      // Simulate loading delay
+      setTimeout(() => {
+        if (username === validUsername && password === validPassword) {
+          // Login successful
+          loginLoading.classList.remove('show');
+          
+          // Animate login screen exit
+          loginScreen.style.opacity = '0';
+          loginScreen.style.transform = 'scale(0.95)';
+          
+          setTimeout(() => {
+            loginScreen.classList.add('hidden');
+            mainContent.classList.add('visible');
+          }, 600);
+
+          // Create celebratory effects
+          for(let i = 0; i < 20; i++) {
+            setTimeout(() => createLoginSparkle(), i * 50);
+          }
+        } else {
+          // Login failed
+          loginLoading.classList.remove('show');
+          loginError.classList.add('show');
+          loginError.textContent = '❌ Neteisingas vartotojo vardas arba slaptažodis';
+          
+          // Shake animation
+          loginForm.style.animation = 'none';
+          setTimeout(() => {
+            loginForm.style.animation = 'shake 0.5s ease';
+          }, 10);
+
+          passwordInput.value = '';
+        }
+      }, 1200);
+    });
+
+    function createLoginSparkle() {
+      const sparkle = document.createElement("div");
+      sparkle.innerHTML = "✨";
+      sparkle.style.cssText = `
+        position: fixed;
+        left: ${Math.random() * 100}vw;
+        top: ${Math.random() * 100}vh;
+        font-size: ${Math.random() * 30 + 15}px;
+        animation: sparkleUp 1.5s ease-out forwards;
+        pointer-events: none;
+        z-index: 4999;
+      `;
+      document.body.appendChild(sparkle);
+      setTimeout(() => sparkle.remove(), 1500);
+    }
+
+    // ========== MAIN APP LOGIC ==========
     const noBtn = document.getElementById("no");
     const yesBtn = document.getElementById("yes");
     const card = document.querySelector(".card");
